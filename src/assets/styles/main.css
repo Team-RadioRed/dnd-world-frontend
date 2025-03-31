@@ -1,0 +1,107 @@
+body {
+  padding: 0px;
+  margin: 0px;
+  overflow: hidden;
+}
+#app {
+  width: 100%;
+  height: 100%;
+}
+hr {
+  width: 100%;
+}
+
+.map-container {
+  width: 100vw;
+  height: 100vh;
+  cursor: grab;
+}
+.map-controll {
+  position: absolute;
+  will-change: transform;
+}
+.tiles-container {
+  position: absolute;
+  z-index: 100;
+}
+.point-container {
+  position: absolute;
+  z-index: 200;
+}
+
+.tile {
+  position: absolute;
+  background-size: cover;
+  image-rendering: crisp-edges;
+  pointer-events: none;
+}
+.map-container:active {
+  cursor: grabbing;
+}
+
+.point {
+  position: absolute;
+  will-change: transform;
+  user-select: none;
+
+  padding: 5px;
+  border: 1px solid #000000;
+  background-color: #ffffffbb;
+  cursor: pointer;
+}
+.point label {
+  cursor: pointer;
+}
+.point:hover {
+  background-color: #0000ffbb;
+  color: #ffffff;
+}
+
+.panel-fade {
+  position: absolute;
+  width: 100dvw;
+  height: 100dvh;
+  z-index: 500;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  background-color: #000000bb;
+}
+.info-panel {
+  width: 100dvw;
+  max-width: 900px;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+
+  background-color: #ffffff;
+  padding: 10px;
+}
+.info-description {
+  display: flex;
+  flex-direction: column;
+}
+.info-container {
+  margin: 10px;
+}
+.info-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-additonal-button {
+  position: absolute;
+  left: calc(50% + 470px);
+  width: 100px;
+
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+}
+.info-additonal-button:hover {
+  background-color: #0000ff;
+  color: #ffffff;
+}
