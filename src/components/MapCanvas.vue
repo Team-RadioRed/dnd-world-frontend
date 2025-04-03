@@ -10,6 +10,10 @@ export default {
             dragStartY: 0,
             initialCameraX: 0,
             initialCameraY: 0,
+            initialPinchDistance: null,
+            initialScale: 1,
+            pinchCenterX: 0,
+            pinchCenterY: 0,
         }
     },
     props: {
@@ -64,27 +68,81 @@ export default {
         },
 
         startDrag(e) {
+            if (e.touches) {
+                if (e.touches.length === 1) {
+                    this.handleDragStart(e.touches[0]);
+                } else if (e.touches.length === 2) {
+                    this.handlePinchStart(e);
+                }
+            } else {
+                this.handleDragStart(e);
+            }
+        },
+
+        handleDragStart(event) {
             this.isDragging = true;
-            this.dragStartX = e.clientX;
-            this.dragStartY = e.clientY;
+            this.dragStartX = event.clientX;
+            this.dragStartY = event.clientY;
             this.initialCameraX = this.cameraX;
             this.initialCameraY = this.cameraY;
         },
 
         handleDrag(e) {
-            if (!this.isDragging) return;
+            if (e.touches?.length === 2) {
+                this.handlePinchMove(e);
+                return;
+            }
 
-            const dx = e.clientX - this.dragStartX;
-            const dy = e.clientY - this.dragStartY;
+            if (!this.isDragging) return;
+            const event = e.touches?.[0] || e;
+
+            const dx = event.clientX - this.dragStartX;
+            const dy = event.clientY - this.dragStartY;
 
             this.cameraX = this.initialCameraX + dx;
             this.cameraY = this.initialCameraY + dy;
-
             this.applyBoundaries();
+
+            e.preventDefault();
         },
 
         endDrag() {
             this.isDragging = false;
+            this.initialPinchDistance = null;
+        },
+
+        handlePinchStart(e) {
+            const [t1, t2] = e.touches;
+            this.initialPinchDistance = Math.hypot(
+                t2.clientX - t1.clientX,
+                t2.clientY - t1.clientY
+            );
+            this.initialScale = this.scale;
+            this.initialCameraX = this.cameraX;
+            this.initialCameraY = this.cameraY;
+            this.pinchCenterX = (t1.clientX + t2.clientX) / 2;
+            this.pinchCenterY = (t1.clientY + t2.clientY) / 2;
+        },
+
+        handlePinchMove(e) {
+            if (e.touches.length !== 2) return;
+            e.preventDefault();
+
+            const [t1, t2] = e.touches;
+            const distance = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
+            const scaleDelta = distance / this.initialPinchDistance;
+            const newScale = this.initialScale * scaleDelta;
+
+            if (newScale < this.mapData.minScale || newScale > this.mapData.maxScale) return;
+
+            const rect = e.target.getBoundingClientRect();
+            const centerX = (t1.clientX + t2.clientX) / 2 - rect.left;
+            const centerY = (t1.clientY + t2.clientY) / 2 - rect.top;
+
+            this.cameraX = centerX - (centerX - this.initialCameraX) * scaleDelta;
+            this.cameraY = centerY - (centerY - this.initialCameraY) * scaleDelta;
+            this.scale = newScale;
+            this.applyBoundaries();
         },
 
         handleZoom(e) {
@@ -121,8 +179,9 @@ export default {
 
 
 <template>
-    <div class="map-container" @mousedown="startDrag" @mousemove="handleDrag" @mouseup="endDrag" @mouseleave="endDrag"
-        @wheel="handleZoom">
+    <div class="map-container" @mousedown="startDrag" @touchstart.prevent="startDrag" @mousemove="handleDrag"
+        @touchmove.prevent="handleDrag" @mouseup="endDrag" @touchend="endDrag" @mouseleave="endDrag"
+        @wheel.prevent="handleZoom">
         <div class="map-controll" :style="containerStyle">
             <slot></slot>
             <div class="tiles-container">
