@@ -12,6 +12,7 @@ const sailpunk = {
       rows: 10,
     },
     isShowWandererPanel: false,
+    isShowPartnersPanel: false,
   }),
   getters: {
     MAP_OBJECTS(state) {
@@ -39,8 +40,19 @@ const sailpunk = {
       );
       return result;
     },
+    CHARACTERS_PARTNERS(state) {
+      if (state.characters == null) return [];
+
+      const result = state.characters.filter(
+        (character) => character["isPartners"] === true
+      );
+      return result;
+    },
     IS_SHOW_WANDERER_PANEL(state) {
       return state.isShowWandererPanel;
+    },
+    IS_SHOW_PARTNERS_PANEL(state) {
+      return state.isShowPartnersPanel;
     },
   },
   mutations: {
@@ -52,6 +64,9 @@ const sailpunk = {
     },
     IS_SHOW_WANDERER_PANEL(state, value) {
       state.isShowWandererPanel = value;
+    },
+    IS_SHOW_PARTNERS_PANEL(state, value) {
+      state.isShowPartnersPanel = value;
     },
   },
   actions: {
