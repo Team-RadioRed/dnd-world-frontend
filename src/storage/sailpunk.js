@@ -11,6 +11,7 @@ const sailpunk = {
       cols: 14,
       rows: 10,
     },
+    isShowWandererPanel: false,
   }),
   getters: {
     MAP_OBJECTS(state) {
@@ -28,7 +29,6 @@ const sailpunk = {
       const result = state.characters.find(
         (character) => character["_id"] === id
       );
-      console.log(result, id);
       return result;
     },
     CHARACTERS_WANDERER(state) {
@@ -39,6 +39,9 @@ const sailpunk = {
       );
       return result;
     },
+    IS_SHOW_WANDERER_PANEL(state) {
+      return state.isShowWandererPanel;
+    },
   },
   mutations: {
     MAP_OBJECTS(state, value) {
@@ -46,6 +49,9 @@ const sailpunk = {
     },
     CHARACTERS(state, value) {
       state.characters = value;
+    },
+    IS_SHOW_WANDERER_PANEL(state, value) {
+      state.isShowWandererPanel = value;
     },
   },
   actions: {

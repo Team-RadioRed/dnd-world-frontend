@@ -1,7 +1,7 @@
 <script>
 export default {
     props: {
-        data: Object
+        data: Object,
     },
     methods: {
         openCharacter() {

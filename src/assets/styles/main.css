@@ -112,3 +112,17 @@ hr {
   position: fixed;
   z-index: 300;
 }
+
+.additional-map-panel {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  height: 100dvh;
+  width: 100%;
+  max-width: 400px;
+  background-color: #ffffff;
+  border-right: 1px solid #000000;
+  display: flex;
+  flex-direction: column;
+  z-index: 400;
+}

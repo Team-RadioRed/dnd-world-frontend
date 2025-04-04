@@ -3,13 +3,15 @@ import MapCanvas from '@/components/MapCanvas.vue';
 import ObjectInfo from '@/components/object-info/ObjectInfo.vue';
 import PointCanvas from '@/components/PointCanvas.vue';
 import WandererButton from '@/components/sailpunk/WandererButton.vue';
+import WandererPanel from '@/components/sailpunk/WandererPanel.vue';
 
 export default {
     components: {
         MapCanvas,
         PointCanvas,
         ObjectInfo,
-        WandererButton
+        WandererButton,
+        WandererPanel
     },
     computed: {
         mapData() { return this.$store.getters.MAP_DATA },
@@ -26,6 +28,7 @@ export default {
 <template>
     <WandererButton />
     <ObjectInfo />
+    <WandererPanel />
 
     <MapCanvas :mapData="mapData">
         <PointCanvas :mapObjects="mapObjects" />
