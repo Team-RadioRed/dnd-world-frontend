@@ -1,11 +1,24 @@
 <script>
 export default {
+    data() {
+        return {
+            objectArray: [],
+        }
+    },
     props: {
-        data: Object
+        data: Object,
+    },
+    mounted() {
+        if (!this.data.description) return;
+
+        this.objectArray = [];
+        this.data.description.forEach((id) => {
+            this.objectArray.push(this.$store.getters.CHARACTER_BY_NAME(id));
+        });
     },
     methods: {
-        openChild(data) {
-            this.$store.dispatch("OPEN_OBJECT", data);
+        openChild(objectInfo) {
+            this.$store.dispatch("OPEN_OBJECT", objectInfo);
         }
     }
 }
@@ -17,7 +30,8 @@ export default {
         <label>{{ data.name }}</label>
         <hr>
         <div>
-            <button v-for="(item, index) in data.description" :key="index" @click="() => { openChild(item) }">{{ item.name
+            <button v-for="(item, index) in objectArray" :key="index" @click="() => { openChild(item) }">{{
+                item.name
                 }}</button>
         </div>
     </div>

@@ -22,6 +22,23 @@ const sailpunk = {
     CHARACTERS(state) {
       return state.characters;
     },
+    CHARACTER_BY_NAME: (state) => (id) => {
+      if (state.characters == null) return null;
+
+      const result = state.characters.find(
+        (character) => character["_id"] === id
+      );
+      console.log(result, id);
+      return result;
+    },
+    CHARACTERS_WANDERER(state) {
+      if (state.characters == null) return [];
+
+      const result = state.characters.filter(
+        (character) => character["isWanderer"] === true
+      );
+      return result;
+    },
   },
   mutations: {
     MAP_OBJECTS(state, value) {

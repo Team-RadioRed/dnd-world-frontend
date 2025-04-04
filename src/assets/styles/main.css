@@ -105,3 +105,10 @@ hr {
   background-color: #0000ff;
   color: #ffffff;
 }
+
+.bottom-left-button {
+  bottom: 10px;
+  left: 10px;
+  position: fixed;
+  z-index: 300;
+}
