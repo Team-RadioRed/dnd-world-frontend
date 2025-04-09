@@ -27,12 +27,15 @@ export default {
 
 <template>
     <div class="info-container">
-        <label>{{ data.name }}</label>
-        <hr>
-        <div>
-            <button v-for="(item, index) in objectArray" :key="index" @click="() => { openChild(item) }">{{
-                item.name
-                }}</button>
+        <label class="info-container-title">{{ data.name }}</label>
+        <div class="dt-small-icon-container">
+            <div class="dt-small-icon" v-for="(item, index) in objectArray" :key="index"
+                @click="() => { openChild(item) }">
+                <img :src="item.previeImage" />
+                <div>
+                    <label>{{ item.name }}</label>
+                </div>
+            </div>
         </div>
     </div>
 </template>

@@ -8,8 +8,9 @@ export default {
 
 
 <template>
-    <div class="info-container info-column">
+    <div class="info-container">
         <label class="info-container-title">{{ data.name }}</label>
-        <label class="dt-text" v-for="(item, index) in data.description" :key="index">{{ item }}</label>
+        <img :src="data.img" class="dt-character-img">
+        <label>Test</label>
     </div>
 </template>

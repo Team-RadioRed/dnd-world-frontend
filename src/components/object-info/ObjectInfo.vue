@@ -29,8 +29,9 @@ export default {
             v-if="objectList.length > 1">Preview</button>
 
         <div class="info-panel">
-            <label>{{ currentObject.name }}:</label>
-            <hr>
+            <div class="info-panel-title">
+                <label>{{ currentObject.name }}</label>
+            </div>
             <ObjectDescription :data="currentObject.description" />
         </div>
     </div>

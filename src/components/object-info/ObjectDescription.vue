@@ -1,4 +1,5 @@
 <script>
+import DTCharacter from './DTCharacter.vue';
 import DTSmallIcon from './DTSmallIcon.vue';
 import DTText from './DTText.vue';
 
@@ -13,6 +14,8 @@ export default {
                     return DTText;
                 case "small-icon":
                     return DTSmallIcon;
+                case "character":
+                    return DTCharacter;
             }
         }
     }

@@ -2,6 +2,9 @@ body {
   padding: 0px;
   margin: 0px;
   overflow: hidden;
+
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 14px;
 }
 #app {
   width: 100%;
@@ -15,6 +18,9 @@ hr {
   width: 100vw;
   height: 100vh;
   cursor: grab;
+}
+.map-container:active {
+  cursor: grabbing;
 }
 .map-controll {
   position: absolute;
@@ -35,26 +41,35 @@ hr {
   image-rendering: crisp-edges;
   pointer-events: none;
 }
-.map-container:active {
-  cursor: grabbing;
-}
 
 .point {
   position: absolute;
   will-change: transform;
   user-select: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 
+  background-color: #ffffffcc;
+  border: 1px solid #000000cc;
+  border-radius: 10px;
   padding: 5px;
-  border: 1px solid #000000;
-  background-color: #ffffffbb;
-  cursor: pointer;
 }
-.point label {
-  cursor: pointer;
+.point > div {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+
+  border: 3px solid #0000ff;
+  background-color: #0000ff7f;
 }
-.point:hover {
-  background-color: #0000ffbb;
-  color: #ffffff;
+.point > label {
+  white-space: nowrap;
+  cursor: pointer;
+  margin-left: 10px;
+  font-weight: bold;
 }
 
 .panel-fade {
@@ -65,41 +80,68 @@ hr {
 
   display: flex;
   justify-content: center;
-  align-items: center;
   
   background-color: #000000bb;
 }
 .info-panel {
   width: 100dvw;
   max-width: 900px;
-  height: 100dvh;
+  height: 100%;
   display: flex;
   flex-direction: column;
+
   overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-color: #ffffff7c #ffffff00;
 
   background-color: #ffffff;
   padding: 10px;
+}
+.info-panel-title {
+  font-size: 36px;
+  padding-bottom: 20px;
 }
 .info-description {
   display: flex;
   flex-direction: column;
 }
 .info-container {
-  margin: 10px;
+  margin: 0px 10px 10px 5px;
+  padding: 0px 0px 10px 15px;
+  border-left: 2px solid #000000;
 }
 .info-column {
   display: flex;
   flex-direction: column;
 }
+.info-container-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+  display: block;
+}
 
-.info-additonal-button {
-  position: absolute;
-  left: calc(50% + 470px);
-  width: 100px;
+@media screen and (min-width: 1200px) {
+  .info-additonal-button {
+    position: absolute;
+    left: calc(50% + 470px);
+    width: 100px;
 
-  border: none;
-  padding: 5px;
-  cursor: pointer;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+  }
+}
+@media screen and (max-width: 1199px) {
+  .info-additonal-button {
+    position: fixed;
+    right: 10px;
+
+    width: 100px;
+    padding: 5px;
+    
+    cursor: pointer;
+    border: 1px solid #000000;
+  }
 }
 .info-additonal-button:hover {
   background-color: #0000ff;
@@ -125,4 +167,48 @@ hr {
   display: flex;
   flex-direction: column;
   z-index: 400;
+}
+
+.dt-text  {
+  text-indent: 1em;
+}
+
+.dt-small-icon-container {
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+}
+.dt-small-icon {
+  position: relative;
+  height: 256px;
+  cursor: pointer;
+}
+.dt-small-icon label {
+  cursor: pointer;
+  text-align: center;
+}
+.dt-small-icon > div {
+  display: flex;
+  position: absolute;
+
+  justify-content: center;
+  align-items: center;
+
+  background-color: #0000007c;
+  color: #ffffff;
+  
+  height: 20%;
+  width: 100%;
+  bottom: 0px;
+
+  transition: 0.5s;
+}
+.dt-small-icon:hover > div {
+  height: 100%;
+}
+
+.dt-character-img {
+  float: left; 
+  margin: 0 10px 10px 0;
+  width: 50%;
 }
