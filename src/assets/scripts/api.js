@@ -1,11 +1,10 @@
 import axios from "axios";
-
-const defaultURL = "http://127.0.0.1:3000";
+import { API_URL } from "@/storage/constants";
 
 export async function requestAxios(url) {
   const response = await axios({
     method: "GET",
-    url: `${defaultURL}${url}`,
+    url: `${API_URL}${url}`,
   }).then((response) => {
     console.log("respons:", response);
     return response.data;

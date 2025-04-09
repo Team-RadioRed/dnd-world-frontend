@@ -1,4 +1,6 @@
 <script>
+import { IMG_URL } from '@/storage/constants';
+
 export default {
     data() {
         return {
@@ -20,12 +22,14 @@ export default {
         mapData: Object,
     },
     computed: {
+        imageURL() {
+            return IMG_URL;
+        },
         containerStyle() {
             return {
                 transform: `translate(${this.cameraX}px, ${this.cameraY}px) scale(${this.scale})`,
             };
         },
-
         visibleTiles() {
             const tiles = [];
             const viewport = this.calculateViewport();
@@ -42,7 +46,7 @@ export default {
     },
     methods: {
         tileStyle(tile) {
-            const imageURL = new URL(`/src/assets/images/map-cell/row-${tile.y + 1}-column-${tile.x + 1}.webp`, import.meta.url).href;
+            const imageURL = `${this.imageURL}/map/r-${tile.y}_c-${tile.x}.jpg`;
             const tileSize = this.mapData.tileSize;
 
             return {
