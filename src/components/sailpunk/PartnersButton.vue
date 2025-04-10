@@ -10,5 +10,5 @@ export default {
 
 
 <template>
-    <button class="bottom-left-button" style="bottom: 40px;" @click="openPanel">Персонажи напарники</button>
+    <img class="bottom-left-button" style="bottom: 84px;" src="@/assets/images/partners.png" @click="openPanel" />
 </template>

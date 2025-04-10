@@ -10,7 +10,5 @@ export default {
 
 
 <template>
-    <button class="bottom-left-button" @click="openPanel">
-        Странствующие персонажи
-    </button>
+    <img class="bottom-left-button" src="@/assets/images/wanderers.png" @click="openPanel" />
 </template>

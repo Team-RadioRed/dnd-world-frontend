@@ -65,6 +65,15 @@
   left: 10px;
   position: fixed;
   z-index: 300;
+
+  border-radius: 10px;
+  border: 1px solid #000000;
+
+  cursor: pointer;
+  width: 64px;
+  height: 64px;
+
+  background-color: #ffffff;
 }
   
 /* Panel */
@@ -145,13 +154,14 @@
     cursor: pointer;
     margin-top: 10px;
     margin-right: 10px;
-
+    
+    transition: 0.5s;
     background-color: #ffffff;
     border: 1px solid #000000;
 }
 .info-controller button:hover {
-  background-color: #0000ff;
-  color: #ffffff;
+    background-color: #0000ff;
+    color: #ffffff;
 }
 @media only screen and (min-width: 1200px) {
     .info-controller {
