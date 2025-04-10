@@ -9,7 +9,7 @@ export default {
 
 <template>
     <div class="info-container">
-        <label class="info-container-title">{{ data.name }}</label>
+        <label class="info-container-title" v-if="data.isHideName != true">{{ data.name }}</label>
         <img :src="data.img" class="dt-character-img">
         <label class="dt-character-text" v-for="(description, index) in data.description" :key="index">
             {{ description }}

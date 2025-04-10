@@ -1,6 +1,7 @@
 <script>
 import DTCharacter from './DTCharacter.vue';
 import DTSmallIcon from './DTSmallIcon.vue';
+import DTStats from './DTStats.vue';
 import DTText from './DTText.vue';
 
 export default {
@@ -16,6 +17,8 @@ export default {
                     return DTSmallIcon;
                 case "character":
                     return DTCharacter;
+                case "stats":
+                    return DTStats;
             }
         }
     }

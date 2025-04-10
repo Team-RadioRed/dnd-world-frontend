@@ -47,4 +47,18 @@
 }
 .dt-character-text {
   display: block;
+  margin-bottom: 1em;
+  text-indent: 1em;
+  text-align: justify;
+}
+
+/* Stats */
+.dt-stats-table {
+  border: 1px solid #000000;
+  border-collapse: collapse;
+}
+.dt-stats-table th, td {
+  border-right: 1px solid #000000;
+  padding: 3px;
+  text-align: center;
 }
