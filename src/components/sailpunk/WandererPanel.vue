@@ -19,10 +19,15 @@ export default {
 
 
 <template>
-    <div class="additional-map-panel" v-if="isShow">
-        <label>Странствующие персонажи:</label>
-        <button @click="closePanel">Close</button>
+    <div class="additional-panel" v-if="isShow">
+        <div class="additional-panel-title">
+            <label>Странствующие персонажи:</label>
+            <button @click="closePanel">Закрыть</button>
+        </div>
+        <hr>
 
-        <CharacterSmallIcon v-for="(character, index) in characters" :key="index" :data="character" />
+        <div class="dt-small-icon-container" style="padding: 10px;">
+            <CharacterSmallIcon v-for="(character, index) in characters" :key="index" :data="character" />
+        </div>
     </div>
 </template>

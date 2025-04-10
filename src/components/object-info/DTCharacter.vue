@@ -11,6 +11,8 @@ export default {
     <div class="info-container">
         <label class="info-container-title">{{ data.name }}</label>
         <img :src="data.img" class="dt-character-img">
-        <label>Test</label>
+        <label class="dt-character-text" v-for="(description, index) in data.description" :key="index">
+            {{ description }}
+        </label>
     </div>
 </template>

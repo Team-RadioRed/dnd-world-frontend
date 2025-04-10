@@ -13,5 +13,10 @@ export default {
 
 
 <template>
-    <button @click="openCharacter">{{ data.name }}</button>
+    <div @click="openCharacter" class="dt-small-icon">
+        <img :src="data.img" />
+        <div>
+            <label>{{ data.name }}</label>
+        </div>
+    </div>
 </template>

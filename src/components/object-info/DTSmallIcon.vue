@@ -31,7 +31,7 @@ export default {
         <div class="dt-small-icon-container">
             <div class="dt-small-icon" v-for="(item, index) in objectArray" :key="index"
                 @click="() => { openChild(item) }">
-                <img :src="item.previeImage" />
+                <img :src="item.img" />
                 <div>
                     <label>{{ item.name }}</label>
                 </div>
