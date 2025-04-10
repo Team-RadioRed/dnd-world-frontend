@@ -1,0 +1,164 @@
+@import "./sp-description.css";
+
+/* Map */
+.map-container {
+  width: 100vw;
+  height: 100vh;
+  cursor: grab;
+}
+.map-container:active {
+  cursor: grabbing;
+}
+.map-controll {
+  position: absolute;
+  will-change: transform;
+}
+.tiles-container {
+  position: absolute;
+  z-index: 100;
+}
+.point-container {
+  position: absolute;
+  z-index: 200;
+}
+
+.tile {
+  position: absolute;
+  background-size: cover;
+  image-rendering: crisp-edges;
+  pointer-events: none;
+}
+
+.point {
+  position: absolute;
+  will-change: transform;
+  user-select: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #ffffffcc;
+  border: 1px solid #000000cc;
+  border-radius: 10px;
+  padding: 5px;
+}
+.point > div {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+
+  border: 3px solid #0000ff;
+  background-color: #0000ff7f;
+}
+.point > label {
+  white-space: nowrap;
+  cursor: pointer;
+  margin-left: 10px;
+  font-weight: bold;
+}
+
+/* Map controller */
+.bottom-left-button {
+  bottom: 10px;
+  left: 10px;
+  position: fixed;
+  z-index: 300;
+}
+  
+/* Panel */
+.panel-fade {
+  position: absolute;
+  width: 100dvw;
+  height: 100dvh;
+  z-index: 500;
+
+  display: flex;
+  justify-content: center;
+  
+  background-color: #000000bb;
+}
+.info-panel {
+  width: 100dvw;
+  max-width: 900px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  background-color: #ffffff;
+  padding: 10px;
+  padding-top: 50px;
+}
+@media only screen and (min-width: 1200px) {
+    .info-panel {
+        padding-top: 10px;
+    }
+}
+.info-panel-title {
+  font-size: 36px;
+}
+.additional-map-panel {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  height: 100dvh;
+  width: 100%;
+  max-width: 400px;
+  background-color: #ffffff;
+  border-right: 1px solid #000000;
+  display: flex;
+  flex-direction: column;
+  z-index: 400;
+}
+
+/* Description */
+.info-description {
+  display: flex;
+  flex-direction: column;
+}
+.info-container {
+    margin-bottom: 10px;
+}
+.info-column {
+  display: flex;
+  flex-direction: column;
+}
+.info-container-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+/* Description controller */
+.info-controller {
+    position: fixed;
+    top: 0px;
+}
+.info-controller button {
+    width: 100px;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-right: 10px;
+
+    background-color: #ffffff;
+    border: 1px solid #000000;
+}
+.info-controller button:hover {
+  background-color: #0000ff;
+  color: #ffffff;
+}
+@media only screen and (min-width: 1200px) {
+    .info-controller {
+        position: absolute;
+        left: calc(50% + 470px);
+    }
+    .info-controller button {
+        margin-right: 0px;
+    }
+}

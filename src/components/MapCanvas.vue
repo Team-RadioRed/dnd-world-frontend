@@ -187,12 +187,11 @@ export default {
         @touchmove.prevent="handleDrag" @mouseup="endDrag" @touchend="endDrag" @mouseleave="endDrag"
         @wheel.prevent="handleZoom">
         <div class="map-controll" :style="containerStyle">
-            <slot></slot>
             <div class="tiles-container">
-
                 <div v-for="tile in visibleTiles" :key="`${tile.x}-${tile.y}`" class="tile" :style="tileStyle(tile)">
                 </div>
             </div>
+            <slot></slot>
         </div>
     </div>
 </template>

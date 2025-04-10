@@ -24,13 +24,15 @@ export default {
 
 <template>
     <div class="panel-fade" v-if="isShow">
-        <button class="info-additonal-button" style="top: 10px;" @click="closeAll">Close</button>
-        <button class="info-additonal-button" style="top: 40px;" @click="closeCurrent"
-            v-if="objectList.length > 1">Preview</button>
-
         <div class="info-panel">
+            <div class="info-controller">
+                <button style="top: 10px;" @click="closeAll">Закрыть</button>
+                <button style="top: 40px;" @click="closeCurrent" v-if="objectList.length > 1">Назад</button>
+            </div>
+
             <div class="info-panel-title">
                 <label>{{ currentObject.name }}</label>
+                <hr>
             </div>
             <ObjectDescription :data="currentObject.description" />
         </div>

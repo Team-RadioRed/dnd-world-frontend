@@ -18,7 +18,7 @@ export default {
 
 
 <template>
-    <div class="point" :style="getPosition" @click="openObject">
+    <div class="point" :style="getPosition" @click="openObject" @touchend="openObject">
         <div></div>
         <label>{{ data.name }}</label>
     </div>
