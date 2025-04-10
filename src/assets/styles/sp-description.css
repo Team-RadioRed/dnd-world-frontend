@@ -56,9 +56,11 @@
 .dt-stats-table {
   border: 1px solid #000000;
   border-collapse: collapse;
+  table-layout: fixed;
 }
 .dt-stats-table th, td {
   border-right: 1px solid #000000;
   padding: 3px;
   text-align: center;
+  width: 16.66%;
 }

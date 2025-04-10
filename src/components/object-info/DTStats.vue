@@ -28,7 +28,7 @@ export default {
             </tr>
             <tr>
                 <td v-for="(description, index) in data.description" :key="index">
-                    {{ description }} ({{ getModifier(description) }})
+                    {{ description }}<br>({{ getModifier(description) }})
                 </td>
             </tr>
         </table>
