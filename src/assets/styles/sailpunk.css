@@ -1,6 +1,3 @@
-@import "./sp-description.css";
-
-/* Map */
 .map-container {
   width: 100vw;
   height: 100vh;
@@ -21,14 +18,12 @@
   position: absolute;
   z-index: 200;
 }
-
 .tile {
   position: absolute;
   background-size: cover;
   image-rendering: crisp-edges;
   pointer-events: none;
 }
-
 .point {
   position: absolute;
   will-change: transform;
@@ -58,25 +53,6 @@
   margin-left: 10px;
   font-weight: bold;
 }
-
-/* Map controller */
-.bottom-left-button {
-  bottom: 10px;
-  left: 10px;
-  position: fixed;
-  z-index: 300;
-
-  border-radius: 10px;
-  border: 1px solid #000000;
-
-  cursor: pointer;
-  width: 64px;
-  height: 64px;
-
-  background-color: #ffffff;
-}
-  
-/* Panel */
 .panel-fade {
   position: absolute;
   width: 100%;
@@ -111,59 +87,13 @@
 .info-panel-title {
   font-size: 36px;
 }
-.additional-panel {
-    position: fixed;
-    left: 0px;
-    top: 0px;
-    height: 100%;
-    width: 100%;
-    background-color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    z-index: 400;
-}
-@media only screen and (min-width: 1200px) {
-    .additional-panel {
-        max-width: 400px;
-        border-right: 1px solid #000000;
-      }
-}
-
-/* Additional panel */
-.additional-panel-title {
-    display: flex;
-    flex-direction: row;
-    padding: 10px 10px 0px 10px;
-}
-.additional-panel-title label {
-    flex: 1 1 100%;
-    font-size: 24px;
-}
-.additional-panel-title button {
-    float: 0 0 100px;
-
-    border-radius: 0px;
-    border: 1px solid #000000;
-    background-color: #ffffff;
-    transition: 0.5s;
-    cursor: pointer;
-    padding: 5px;
-    width: 100px;
-}
-.additional-panel-title button:hover {
-    background-color: #0000ff;
-    color: #ffffff;
-}
-
-
-/* Description */
 .info-description {
   display: flex;
   flex-direction: column;
   row-gap: 10px;
 }
 .info-container {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 .info-column {
   display: flex;
@@ -174,26 +104,27 @@
   margin-bottom: 10px;
   display: block;
 }
-
-/* Description controller */
 .info-controller {
     position: fixed;
     display: flex;
     justify-content: flex-end;
-    width: calc(100% - 20px);
+    width: 100%;
     top: 0px;
+    column-gap: 10px;
+    box-sizing: border-box;
+    padding: 10px;
+    background-color: #ffffff;
+    box-shadow: 0px 5px 5px #ffffff;
 }
 .info-controller button {
-    width: 100px;
-    border: none;
-    padding: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-    margin-right: 10px;
-    
-    transition: 0.5s;
-    background-color: #ffffff;
-    border: 1px solid #000000;
+  flex: 1 1 50%;
+  width: 100px;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  transition: 0.5s;
+  background-color: #ffffff;
+  border: 1px solid #000000;
 }
 .info-controller button:hover {
     background-color: #0000ff;
@@ -204,8 +135,98 @@
         position: absolute;
         left: calc(50% + 470px);
         width: auto;
+
+        flex-direction: column;
+        row-gap: 10px;
+
+        background-color: transparent;
+        box-shadow: none;
     }
     .info-controller button {
         margin-right: 0px;
     }
+}
+.additional-button {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  z-index: 300;
+}
+.additional-button img {
+  width: 64px;
+  height: 64px;
+  cursor: pointer;
+  background-color: #ffffff;
+  border: 1px solid #000000;
+  border-radius: 10px;
+}
+.dt-text  {
+  text-indent: 1em;
+}
+.dt-small-icon-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 10px;
+}
+.dt-small-icon {
+  position: relative;
+  height: 256px;
+  cursor: pointer;
+}
+.dt-small-icon label {
+  cursor: pointer;
+  text-align: center;
+}
+.dt-small-icon > div {
+  display: flex;
+  position: absolute;
+
+  justify-content: center;
+  align-items: center;
+
+  background-color: #0000007c;
+  color: #ffffff;
+  
+  height: 20%;
+  width: 100%;
+  bottom: 0px;
+
+  transition: 0.5s;
+}
+.dt-small-icon:hover > div {
+  height: 100%;
+}
+.dt-character-img {
+  float: left; 
+  margin: 0 10px 10px 0;
+  width: 50%;
+}
+.dt-character-text {
+  display: block;
+  margin-bottom: 1em;
+  text-indent: 1em;
+  text-align: justify;
+}
+.dt-stats-table-container {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  width: 100%;
+}
+.dt-stats-table {
+  border: 1px solid #000000;
+  border-collapse: collapse;
+  table-layout: fixed;
+  max-width: 500px;
+  width: 100%;
+}
+.dt-stats-table th, td {
+  border-right: 1px solid #000000;
+  padding: 3px;
+  text-align: center;
+  width: 16.66%;
 }

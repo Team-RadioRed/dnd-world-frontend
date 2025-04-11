@@ -2,20 +2,14 @@
 import MapCanvas from '@/components/MapCanvas.vue';
 import ObjectInfo from '@/components/object-info/ObjectInfo.vue';
 import PointCanvas from '@/components/PointCanvas.vue';
-import PartnersButton from '@/components/sailpunk/PartnersButton.vue';
-import PartnersPanel from '@/components/sailpunk/PartnersPanel.vue';
-import WandererButton from '@/components/sailpunk/WandererButton.vue';
-import WandererPanel from '@/components/sailpunk/WandererPanel.vue';
+import AdditionalMapButton from '@/components/sailpunk/AdditionalMapButton.vue';
 
 export default {
     components: {
         MapCanvas,
         PointCanvas,
         ObjectInfo,
-        WandererButton,
-        WandererPanel,
-        PartnersButton,
-        PartnersPanel
+        AdditionalMapButton
     },
     computed: {
         mapData() { return this.$store.getters.MAP_DATA },
@@ -30,13 +24,8 @@ export default {
 
 
 <template>
+    <AdditionalMapButton />
     <ObjectInfo />
-
-    <WandererButton />
-    <WandererPanel />
-
-    <PartnersButton />
-    <PartnersPanel />
 
     <MapCanvas :mapData="mapData">
         <PointCanvas :mapObjects="mapObjects" />

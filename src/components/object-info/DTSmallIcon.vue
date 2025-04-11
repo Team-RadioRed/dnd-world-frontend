@@ -27,7 +27,7 @@ export default {
 
 <template>
     <div class="info-container">
-        <label class="info-container-title">{{ data.name }}</label>
+        <label class="info-container-title" v-if="data.isHideName != true">{{ data.name }}</label>
         <div class="dt-small-icon-container">
             <div class="dt-small-icon" v-for="(item, index) in objectArray" :key="index"
                 @click="() => { openChild(item) }">
