@@ -41,17 +41,18 @@
 }
 .point > div {
   width: 16px;
+  min-width: 16px;
   height: 16px;
   border-radius: 50%;
 
   border: 3px solid #0000ff;
-  background-color: #0000ff7f;
+  /* background-color: #0000ff7f; */
 }
 .point > label {
-  white-space: nowrap;
   cursor: pointer;
   margin-left: 10px;
   font-weight: bold;
+  white-space: nowrap;
 }
 .panel-fade {
   position: absolute;

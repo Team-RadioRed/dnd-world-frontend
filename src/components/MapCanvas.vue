@@ -5,8 +5,8 @@ export default {
     data() {
         return {
             scale: 1,
-            cameraX: 0,
-            cameraY: 0,
+            cameraX: 1792,
+            cameraY: 1280,
             isDragging: false,
             dragStartX: 0,
             dragStartY: 0,
@@ -42,7 +42,7 @@ export default {
                 }
             }
             return tiles;
-        },
+        }
     },
     methods: {
         tileStyle(tile) {
@@ -58,17 +58,16 @@ export default {
         },
 
         calculateViewport() {
-            const documentElement = document.documentElement;
             const scaledTileSize = this.mapData.tileSize * this.scale;
-            const containerWidth = documentElement.offsetWidth;
-            const containerHeight = documentElement.offsetHeight;
+            const containerWidth = window.screen.availWidth;
+            const containerHeight = window.screen.availHeight;
 
             return {
                 startCol: Math.floor((-this.cameraX - containerWidth) / scaledTileSize),
                 endCol: Math.ceil((-this.cameraX + containerWidth) / scaledTileSize),
                 startRow: Math.floor((-this.cameraY - containerHeight) / scaledTileSize),
                 endRow: Math.ceil((-this.cameraY + containerHeight) / scaledTileSize),
-            };
+            }
         },
 
         startDrag(e) {

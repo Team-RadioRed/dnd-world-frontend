@@ -1,7 +1,12 @@
 <script>
+import SDTTitle from './SDTTitle.vue';
+
 export default {
     props: {
         data: Object
+    },
+    components: {
+        SDTTitle
     }
 }
 </script>
@@ -9,7 +14,7 @@ export default {
 
 <template>
     <div class="info-container info-column">
-        <label class="info-container-title">{{ data.name }}</label>
+        <SDTTitle :title="data.name" :is-hide="data.isHideName" />
         <label class="dt-text" v-for="(item, index) in data.description" :key="index">{{ item }}</label>
     </div>
 </template>

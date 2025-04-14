@@ -1,4 +1,6 @@
 <script>
+import SDTTitle from './SDTTitle.vue';
+
 export default {
     data() {
         return {
@@ -7,6 +9,9 @@ export default {
     },
     props: {
         data: Object,
+    },
+    components: {
+        SDTTitle
     },
     mounted() {
         if (!this.data.description) return;
@@ -27,7 +32,7 @@ export default {
 
 <template>
     <div class="info-container">
-        <label class="info-container-title" v-if="data.isHideName != true">{{ data.name }}</label>
+        <SDTTitle :title="data.name" :is-hide="data.isHideName" />
         <div class="dt-small-icon-container">
             <div class="dt-small-icon" v-for="(item, index) in objectArray" :key="index"
                 @click="() => { openChild(item) }">

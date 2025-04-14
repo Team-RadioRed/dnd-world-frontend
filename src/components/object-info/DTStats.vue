@@ -1,7 +1,12 @@
 <script>
+import SDTTitle from './SDTTitle.vue';
+
 export default {
     props: {
         data: Object
+    },
+    components: {
+        SDTTitle
     },
     methods: {
         getModifier(value) {
@@ -16,7 +21,7 @@ export default {
 
 <template>
     <div class="info-container info-column">
-        <label class="info-container-title" v-if="data.isHideName != true">{{ data.name }}</label>
+        <SDTTitle :title="data.name" :is-hide="data.isHideName" />
         <div class="dt-stats-table-container">
             <table class="dt-stats-table">
                 <thead>
