@@ -31,7 +31,6 @@ export default {
         <div class="info-panel">
             <div class="info-panel-title">
                 <label>{{ currentObject.name }}</label>
-                <hr>
             </div>
             <ObjectDescription :data="currentObject.description" />
         </div>
