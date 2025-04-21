@@ -1,17 +1,30 @@
 <script>
+import IconTemple from '../svg/IconTemple.vue';
 import IconCompas from '../svg/IconCompas.vue';
 import IconTeam from '../svg/IconTeam.vue';
 
 export default {
     computed: {
         characterPartners() { return this.$store.getters.CHARACTERS_PARTNERS },
-        characterWanderers() { return this.$store.getters.CHARACTERS_WANDERER }
+        characterWanderers() { return this.$store.getters.CHARACTERS_WANDERER },
+        characterGods() { return this.$store.getters.CHARACTERS_GODS },
     },
     components: {
         IconCompas,
-        IconTeam
+        IconTeam,
+        IconTemple
     },
     methods: {
+        showGods() {
+            this.$store.dispatch("OPEN_OBJECT", {
+                name: "Боги",
+                description: [{
+                    name: "Пантеон",
+                    type: "small-icon",
+                    description: this.characterGods
+                }]
+            });
+        },
         showPartners() {
             this.$store.dispatch("OPEN_OBJECT", {
                 name: "Персонажи напарники",
@@ -41,6 +54,9 @@ export default {
 
 <template>
     <div class="additional-button">
+        <div @click="showGods">
+            <IconTemple />
+        </div>
         <div @click="showPartners">
             <IconTeam />
         </div>

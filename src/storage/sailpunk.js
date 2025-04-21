@@ -6,6 +6,8 @@ const sailpunk = {
     characters: null,
     charactersWanderer: [],
     charactersPartners: [],
+    charactersGods: [],
+
     mapData: {
       tileSize: 256,
       minScale: 0.5,
@@ -30,6 +32,9 @@ const sailpunk = {
     CHARACTERS_PARTNERS(state) {
       return state.charactersPartners;
     },
+    CHARACTERS_GODS(state) {
+      return state.charactersGods;
+    },
     CHARACTER_BY_NAME: (state) => (id) => {
       if (state.characters == null) return null;
 
@@ -52,6 +57,9 @@ const sailpunk = {
     CHARACTERS_PARTNERS(state, value) {
       state.charactersPartners = value;
     },
+    CHARACTERS_GODS(state, value) {
+      state.charactersGods = value;
+    },
   },
   actions: {
     async LOAD_MAP_OBJECTS(context) {
@@ -71,14 +79,18 @@ const sailpunk = {
       context.commit("CHARACTERS", newCharacters);
 
       const characterWanderer = newCharacters
-        .filter((character) => character.isWanderer)
+        .filter((character) => character.group === "wanderer")
         .map((character) => character["_id"]);
       const characterPartners = newCharacters
-        .filter((character) => character.isPartners)
+        .filter((character) => character.group === "partners")
+        .map((character) => character["_id"]);
+      const characterGods = newCharacters
+        .filter((character) => character.group === "gods")
         .map((character) => character["_id"]);
 
       context.commit("CHARACTERS_WANDERER", characterWanderer);
       context.commit("CHARACTERS_PARTNERS", characterPartners);
+      context.commit("CHARACTERS_GODS", characterGods);
     },
   },
 };
