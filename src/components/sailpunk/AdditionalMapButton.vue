@@ -1,8 +1,15 @@
 <script>
+import IconCompas from '../svg/IconCompas.vue';
+import IconTeam from '../svg/IconTeam.vue';
+
 export default {
     computed: {
         characterPartners() { return this.$store.getters.CHARACTERS_PARTNERS },
         characterWanderers() { return this.$store.getters.CHARACTERS_WANDERER }
+    },
+    components: {
+        IconCompas,
+        IconTeam
     },
     methods: {
         showPartners() {
@@ -34,7 +41,11 @@ export default {
 
 <template>
     <div class="additional-button">
-        <img src="@/assets/images/partners.png" @click="showPartners">
-        <img src="@/assets/images/wanderers.png" @click="showWanderers">
+        <div @click="showPartners">
+            <IconTeam />
+        </div>
+        <div @click="showWanderers">
+            <IconCompas />
+        </div>
     </div>
 </template>

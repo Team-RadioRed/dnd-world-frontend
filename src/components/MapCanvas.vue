@@ -5,8 +5,8 @@ export default {
     data() {
         return {
             scale: 1,
-            cameraX: 1792,
-            cameraY: 1280,
+            cameraX: 0,
+            cameraY: 0,
             isDragging: false,
             dragStartX: 0,
             dragStartY: 0,

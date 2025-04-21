@@ -175,14 +175,23 @@
   row-gap: 10px;
   z-index: 300;
 }
-.additional-button img {
+.additional-button > div {
   width: 64px;
   height: 64px;
   cursor: pointer;
-  background-color: #ffffff;
-  border: 1px solid #000000;
-  border-radius: 10px;
+  background-color: #434c5e;
+  box-shadow: 0px 5px 8px #000000;
+  color: #eceff4;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.5s;
 }
+.additional-button > div:hover {
+  background-color: #4c566a;
+}
+
 .dt-text  {
   text-indent: 1em;
   color: #d8dee9;
