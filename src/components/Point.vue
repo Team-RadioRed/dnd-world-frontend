@@ -22,7 +22,7 @@ export default {
 
 <template>
     <div class="point" :style="getPosition" @click="openObject" @touchend="openObject">
-        <div :style="{ backgroundColor: `${color}7f`, border: `3px solid ${color}` }"></div>
+        <div :style="{ backgroundColor: `${color}` }"></div>
         <label>{{ data.name }}</label>
     </div>
 </template>
