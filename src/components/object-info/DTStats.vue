@@ -26,12 +26,12 @@ export default {
             <table class="dt-stats-table">
                 <thead>
                     <tr>
-                        <th>Сил</th>
-                        <th>Лов</th>
-                        <th>Тел</th>
-                        <th>Инт</th>
-                        <th>Мдр</th>
-                        <th>Хар</th>
+                        <th>СИЛ</th>
+                        <th>ЛОВ</th>
+                        <th>ТЕЛ</th>
+                        <th>ИНТ</th>
+                        <th>МДР</th>
+                        <th>ХАР</th>
                     </tr>
                 </thead>
                 <tbody>

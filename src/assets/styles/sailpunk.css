@@ -266,7 +266,13 @@
 .dt-character-img {
   float: left; 
   margin: 0 10px 10px 0;
-  width: 50%;
+  border-radius: 10px;
+  box-shadow: 0px 5px 10px #000000;
+  
+  width: auto;
+  height: auto;
+  max-height: 60dvh;
+  max-width: 50%;
 }
 .dt-character-text {
   display: block;
@@ -276,20 +282,26 @@
 }
 .dt-stats-table-container {
   display: grid;
-  justify-items: center;
-  align-items: center;
   width: 100%;
 }
 .dt-stats-table {
-  border: 1px solid #000000;
+  border: 5px solid #3b4252;
   border-collapse: collapse;
   table-layout: fixed;
   max-width: 500px;
   width: 100%;
 }
+.dt-stats-table th {
+  background-color: #ebcb8b;
+  color: #2e3440;
+}
 .dt-stats-table th, td {
-  border-right: 1px solid #000000;
+  border-right: 5px solid #3b4252;
   padding: 3px;
   text-align: center;
   width: 16.66%;
+}
+.dt-skill-container {
+  border-left: 20px solid #ebcb8b;
+  padding: 10px;
 }
