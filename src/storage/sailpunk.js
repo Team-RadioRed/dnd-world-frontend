@@ -71,7 +71,7 @@ const sailpunk = {
 
         if (charactersObject[groupName] == null)
           charactersObject[groupName] = [];
-        charactersObject[groupName].push(character);
+        charactersObject[groupName].push(character["_id"]);
 
         // Добавление персонажа в словарь
         charactersDictionary[character["_id"]] = character;

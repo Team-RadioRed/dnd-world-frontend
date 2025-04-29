@@ -57,10 +57,7 @@ export default {
         },
 
         getCharacterData(name) {
-            let characters = this.$store.getters.CHARACTERS(name);
-            if (characters == null) return [];
-            characters = characters.map((character) => character["_id"]);
-            return characters;
+            return this.$store.getters.CHARACTERS(name);
         }
     }
 }
