@@ -4,11 +4,6 @@ import IconCompas from '../svg/IconCompas.vue';
 import IconTeam from '../svg/IconTeam.vue';
 
 export default {
-    computed: {
-        characterPartners() { return this.$store.getters.CHARACTERS_PARTNERS },
-        characterWanderers() { return this.$store.getters.CHARACTERS_WANDERER },
-        characterGods() { return this.$store.getters.CHARACTERS_GODS },
-    },
     components: {
         IconCompas,
         IconTeam,
@@ -21,7 +16,7 @@ export default {
                 description: [{
                     name: "Пантеон",
                     type: "small-icon",
-                    description: this.characterGods
+                    description: this.getCharacterData("pantheon"),
                 }]
             });
         },
@@ -31,7 +26,7 @@ export default {
                 description: [{
                     name: "Название",
                     type: "small-icon",
-                    description: this.characterPartners,
+                    description: this.getCharacterData("partners"),
                     isHideName: true
                 }]
             });
@@ -42,10 +37,15 @@ export default {
                 description: [{
                     name: "Название",
                     type: "small-icon",
-                    description: this.characterWanderers,
+                    description: this.getCharacterData("wanderer"),
                     isHideName: true
                 }]
             });
+        },
+        getCharacterData(name) {
+            let characters = this.$store.getters.CHARACTERS(name);
+            characters = characters.map((character) => character["_id"]);
+            return characters;
         }
     }
 }
