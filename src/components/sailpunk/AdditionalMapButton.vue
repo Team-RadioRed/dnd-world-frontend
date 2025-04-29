@@ -2,12 +2,14 @@
 import IconTemple from '../svg/IconTemple.vue';
 import IconCompas from '../svg/IconCompas.vue';
 import IconTeam from '../svg/IconTeam.vue';
+import IconCrown from '../svg/IconCrown.vue';
 
 export default {
     components: {
         IconCompas,
         IconTeam,
-        IconTemple
+        IconTemple,
+        IconCrown
     },
     methods: {
         showGods() {
@@ -42,8 +44,21 @@ export default {
                 }]
             });
         },
+        showEmpire() {
+            this.$store.dispatch("OPEN_OBJECT", {
+                name: "Персонажи из империи",
+                description: [{
+                    name: "Название",
+                    type: "small-icon",
+                    description: this.getCharacterData("empire"),
+                    isHideName: true
+                }]
+            });
+        },
+
         getCharacterData(name) {
             let characters = this.$store.getters.CHARACTERS(name);
+            if (characters == null) return [];
             characters = characters.map((character) => character["_id"]);
             return characters;
         }
@@ -56,6 +71,9 @@ export default {
     <div class="additional-button">
         <div @click="showGods">
             <IconTemple />
+        </div>
+        <div @click="showEmpire">
+            <IconCrown />
         </div>
         <div @click="showPartners">
             <IconTeam />
