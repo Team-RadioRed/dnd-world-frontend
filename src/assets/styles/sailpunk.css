@@ -230,6 +230,7 @@
 }
 .dt-small-icon-bottom {
   display: flex;
+  column-gap: 10px;
   align-items: center;
   box-sizing: border-box;
   background-color: #434c5e;
@@ -245,7 +246,7 @@
   background-color: #4c566a;
 }
 .dt-small-icon-bottom .left-block {
-  flex: 0 0 60%;
+  flex: 1 1 60%;
   display: flex;
   flex-direction: column;
 }
