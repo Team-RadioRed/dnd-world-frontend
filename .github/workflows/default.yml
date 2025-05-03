@@ -22,8 +22,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            eval `ssh-agent -s`
-            ssh-add ~/.ssh/id_rsa
             cd '${{ secrets.PROJECT_FOLDER }}'
             git pull
             npm run build
