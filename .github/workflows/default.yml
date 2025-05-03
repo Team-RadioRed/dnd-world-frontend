@@ -22,6 +22,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd ${{ secrets.PROJECT_FOLDER }}
+            cd '${{ secrets.PROJECT_FOLDER }}'
             git pull
             npm run build
