@@ -7,6 +7,11 @@ const routes = [
   {
     name: "home",
     path: "/",
+    component: SailpunkEastMap,
+  },
+  {
+    name: "hub",
+    path: "/main",
     component: HomePage,
   },
   {
