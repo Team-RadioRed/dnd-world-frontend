@@ -3,6 +3,7 @@ import { requestAxios } from "@/assets/scripts/api";
 const sailpunk = {
   state: () => ({
     mapObjects: null,
+    subPage: null,
 
     characters: {},
     charactersDictionary: {},
@@ -31,6 +32,9 @@ const sailpunk = {
     CHARACTER_BY_NAME: (state) => (id) => {
       return state.charactersDictionary[id];
     },
+    SUB_PAGE(state) {
+      return state.subPage;
+    },
   },
   mutations: {
     MAP_OBJECTS(state, value) {
@@ -44,6 +48,9 @@ const sailpunk = {
     },
     CHARACTERS_DICTIONARY(state, value) {
       state.charactersDictionary = value;
+    },
+    SUB_PAGE(state, value) {
+      state.subPage = value;
     },
   },
   actions: {
@@ -79,6 +86,19 @@ const sailpunk = {
 
       context.commit("CHARACTERS", charactersObject);
       context.commit("CHARACTERS_DICTIONARY", charactersDictionary);
+    },
+    async LOAD_ADDITIONAL_PAGE(context) {
+      const subPage = context.getters.SUB_PAGE;
+      if (subPage != null) return;
+
+      const newSubPage = await requestAxios("/api/subPage");
+      const subPageObject = {};
+
+      newSubPage.forEach((page) => {
+        subPageObject[page["_id"]] = page;
+      });
+
+      context.commit("SUB_PAGE", subPageObject);
     },
   },
 };

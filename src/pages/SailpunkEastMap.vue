@@ -18,6 +18,7 @@ export default {
     async mounted() {
         await this.$store.dispatch("LOAD_CHARACTERS");
         await this.$store.dispatch("LOAD_MAP_OBJECTS");
+        await this.$store.dispatch("LOAD_ADDITIONAL_PAGE");
     }
 }
 </script>
