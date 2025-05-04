@@ -16,3 +16,14 @@ body {
 hr {
   width: 100%;
 }
+.version-label {
+  position: absolute;
+  text-align: right;
+  right: 10px;
+  bottom: 10px;
+  z-index: 1000;
+  background-color: #4c566a;
+  color: #eceff4;
+  border-radius: 10px;
+  padding: 5px;
+}
