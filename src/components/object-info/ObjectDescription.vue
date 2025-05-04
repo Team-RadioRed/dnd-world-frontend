@@ -3,6 +3,7 @@ import DTCharacter from './DTCharacter.vue';
 import DTSkills from './DTSkills.vue';
 import DTSmallIcon from './DTSmallIcon.vue';
 import DTStats from './DTStats.vue';
+import DTSubPage from './DTSubPage.vue';
 import DTText from './DTText.vue';
 
 export default {
@@ -22,6 +23,8 @@ export default {
                     return DTStats;
                 case "skills":
                     return DTSkills;
+                case "sub-page":
+                    return DTSubPage;
             }
         }
     }

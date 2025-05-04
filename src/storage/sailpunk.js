@@ -35,6 +35,9 @@ const sailpunk = {
     SUB_PAGE(state) {
       return state.subPage;
     },
+    SUB_PAGE_BY_NAME: (state) => (id) => {
+      return state.subPage[id];
+    },
   },
   mutations: {
     MAP_OBJECTS(state, value) {
