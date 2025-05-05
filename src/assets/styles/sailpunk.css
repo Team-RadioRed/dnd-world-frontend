@@ -217,7 +217,7 @@
   border-bottom-right-radius: 10px;
   height: 64px;
   width: 100%;
-  padding: 10px;
+  padding: 5px;
   transition: 0.5s;
 }
 .dt-small-icon:hover .dt-small-icon-bottom {
