@@ -18,8 +18,19 @@ export default {
                 description: [{
                     name: "Пантеон",
                     type: "small-icon",
-                    description: this.getCharacterData("pantheon"),
-                }]
+                    description: this.getCharacterData("pantheon")
+                },
+                {
+                    name: "Малые боги",
+                    type: "small-icon",
+                    description: this.getCharacterData("smallGods")
+                },
+                {
+                    name: "Забытые боги",
+                    type: "small-icon",
+                    description: this.getCharacterData("forgottenGods")
+                }
+                ]
             });
         },
         showPartners() {
