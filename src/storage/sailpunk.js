@@ -2,11 +2,15 @@ import { requestAxios } from "@/assets/scripts/api";
 
 const sailpunk = {
   state: () => ({
-    mapObjects: null,
     subPage: null,
 
     characters: {},
+    mapObject: {},
     charactersDictionary: {},
+
+    isShowProvince: true,
+    isShowCapital: true,
+    isShowTown: true,
 
     mapData: {
       tileSize: 256,
@@ -38,6 +42,15 @@ const sailpunk = {
     SUB_PAGE_BY_NAME: (state) => (id) => {
       return state.subPage[id];
     },
+    SHOW_PROVINCE(state) {
+      return state.isShowProvince;
+    },
+    SHOW_CAPITAL(state) {
+      return state.isShowCapital;
+    },
+    SHOW_TOWN(state) {
+      return state.isShowTown;
+    },
   },
   mutations: {
     MAP_OBJECTS(state, value) {
@@ -55,15 +68,31 @@ const sailpunk = {
     SUB_PAGE(state, value) {
       state.subPage = value;
     },
+    SHOW_PROVINCE(state, value) {
+      state.isShowProvince = value;
+    },
+    SHOW_CAPITAL(state, value) {
+      state.isShowCapital = value;
+    },
+    SHOW_TOWN(state, value) {
+      state.isShowTown = value;
+    },
   },
   actions: {
     async LOAD_MAP_OBJECTS(context) {
       const mapObject = context.getters.MAP_OBJECTS;
-
-      if (mapObject != null) return;
+      if (Object.keys(mapObject).length !== 0) return;
 
       const newMapObject = await requestAxios("/api/mapObject");
-      context.commit("MAP_OBJECTS", newMapObject);
+      const mapObjectCollection = {};
+      newMapObject.forEach((object, index) => {
+        if (mapObjectCollection[object["type"]] == null) {
+          mapObjectCollection[object["type"]] = [];
+        }
+        mapObjectCollection[object["type"]].push(object);
+      });
+
+      context.commit("MAP_OBJECTS", mapObjectCollection);
     },
     async LOAD_CHARACTERS(context) {
       const characters = context.getters.CHARACTERS_ALL;
