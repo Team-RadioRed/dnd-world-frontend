@@ -26,7 +26,6 @@ export default {
             this.$store.dispatch("OPEN_OBJECT", objectInfo);
         },
         isDeathStyle(state) {
-            console.log(state);
             if (state === true) {
                 return "filter: grayscale(100%);";
             }
@@ -36,7 +35,6 @@ export default {
         },
         getImage(name) {
             const url = new URL(`../../assets/images/${name}`, import.meta.url).href;
-            console.log(url);
             return url;
         }
     }
