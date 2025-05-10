@@ -75,16 +75,15 @@ const sailpunk = {
       const charactersDictionary = {};
 
       newCharacters.forEach((character) => {
-        // Добавление персонажа в группу
-        const groupName =
-          character["group"] != null ? character["group"] : "common";
-
-        if (charactersObject[groupName] == null)
-          charactersObject[groupName] = [];
-        charactersObject[groupName].push(character["_id"]);
-
         // Добавление персонажа в словарь
         charactersDictionary[character["_id"]] = character;
+
+        // Добавление персонажа в группу
+        if (character["group"] == null) return;
+
+        if (charactersObject[character["group"]] == null)
+          charactersObject[character["group"]] = [];
+        charactersObject[character["group"]].push(character["_id"]);
       });
 
       context.commit("CHARACTERS", charactersObject);
