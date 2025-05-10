@@ -394,4 +394,24 @@
   .dt-character-img {
     max-width: 50%;
   }
+  .dt-note-container {
+    background-color: #434c5e;
+    padding: 20px;
+    margin: 0px 20px 0px 20px;
+    border-radius: 10px;
+    border: 2px dashed #eceff4;
+    outline: 5px solid #434c5e;
+    display: flex;
+    flex-direction: column;
+  }
+  .dt-note-description {
+    font-style: italic;
+  }
+  .dt-note-name {
+    font-weight: bold;
+    width: 100%;
+    text-align: right;
+    padding-left: 10px;
+    color: #ebcb8b;
+  }
 }
