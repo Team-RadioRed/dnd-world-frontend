@@ -306,6 +306,11 @@
   text-indent: 1em;
   text-align: justify;
 }
+.dt-character-death-img {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
 .dt-stats-table-container {
   display: grid;
   width: 100%;
