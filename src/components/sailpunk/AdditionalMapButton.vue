@@ -29,6 +29,11 @@ export default {
                     name: "Забытые боги",
                     type: "small-icon",
                     description: this.getCharacterData("forgottenGods")
+                },
+                {
+                    name: "Древние боги",
+                    type: "small-icon",
+                    description: this.getCharacterData("oldGods")
                 }
                 ]
             });
