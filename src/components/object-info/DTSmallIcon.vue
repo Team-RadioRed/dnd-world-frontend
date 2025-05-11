@@ -7,21 +7,22 @@ export default {
             objectArray: [],
         }
     },
+    mounted() {
+        this.updateCharacter();
+    },
     props: {
         data: Object,
     },
     components: {
         SDTTitle
     },
-    mounted() {
-        if (!this.data.description) return;
-
-        this.objectArray = [];
-        this.data.description.forEach((id) => {
-            this.objectArray.push(this.$store.getters.CHARACTER_BY_NAME(id));
-        });
-    },
     methods: {
+        updateCharacter() {
+            this.objectArray = [];
+            this.data.description.forEach((id) => {
+                this.objectArray.push(this.$store.getters.CHARACTER_BY_NAME(id));
+            });
+        },
         openChild(objectInfo) {
             this.$store.dispatch("OPEN_OBJECT", objectInfo);
         },
@@ -36,6 +37,14 @@ export default {
         getImage(name) {
             const url = new URL(`../../assets/images/${name}`, import.meta.url).href;
             return url;
+        }
+    },
+    watch: {
+        data: {
+            handler: function (val, oldVal) {
+                this.updateCharacter();
+            },
+            deep: true
         }
     }
 }
