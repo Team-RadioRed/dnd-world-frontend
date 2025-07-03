@@ -12,16 +12,16 @@ export default {
 <template>
     <div class="home-page-main-container">
         <div class="home-page-header-container">
-            <label>Projects __</label>
-            <label class="home-page-version">version: {{ version }}</label>
+            <label>Проекты __</label>
+            <label class="home-page-version">версия: {{ version }}</label>
         </div>
 
         <div class="home-page-url-container">
             <RouterLink :to="{ name: 'sailpunk-eastmap' }" class="home-page-url-component">
                 <img src="https://radiored.ru/images/worlds/w001.jpg" class="home-page-url-image">
                 <div class="home-page-url-text-container">
-                    <label class="home-page-url-title">>> Sailpunk [ East Provinces ]</label>
-                    <label class="home-page-url-description">Description</label>
+                    <label class="home-page-url-title">>> Sailpunk [ Восточные провинции ]</label>
+                    <label class="home-page-url-description">Мир для D&D компании</label>
                 </div>
             </RouterLink>
             <RouterLink :to="{ name: 'endless-empire' }" class="home-page-url-component">
@@ -31,10 +31,10 @@ export default {
                     <label class="home-page-url-description">Description</label>
                 </div>
             </RouterLink>
-            <RouterLink :to="{ name: 'endless-empire' }" class="home-page-url-component">
+            <RouterLink :to="{ name: 'minsk-metro' }" class="home-page-url-component">
                 <img src="https://radiored.ru/images/worlds/w003.jpg" class="home-page-url-image">
                 <div class="home-page-url-text-container">
-                    <label class="home-page-url-title">>> Minsk Metro 2033</label>
+                    <label class="home-page-url-title">>> Metro 2033 [Минск]</label>
                     <label class="home-page-url-description">Description</label>
                 </div>
             </RouterLink>

@@ -3,6 +3,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import HomePage from "@/pages/HomePage.vue";
 import SailpunkEastMap from "@/pages/SailpunkEastMap.vue";
 import EndlessEmpireMap from "@/pages/EndlessEmpireMap.vue";
+import MinskMetro from "@/pages/MinskMetro.vue";
 
 const routes = [
   {
@@ -19,6 +20,11 @@ const routes = [
     name: "endless-empire",
     path: "/endlessEmpire/worldMap",
     component: EndlessEmpireMap
+  },
+  {
+    name: "minsk-metro",
+    path: "/minskMetro",
+    component: MinskMetro
   }
 ];
 
