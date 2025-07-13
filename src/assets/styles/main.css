@@ -1,10 +1,14 @@
 @import "./sailpunk.css";
-@import "./homePage.css";
+@import "./home-page.css";
+@import "./default-map.css";
 
+/* Main */
 :root {
   --main-white: #f5e9dd;
   --main-black: #494949;
+  
   --main-color: #e85d56;
+  --main-color-2up: #ec7d77;
 }
 body {
   padding: 0px;
