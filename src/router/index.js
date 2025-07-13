@@ -4,6 +4,7 @@ import HomePage from "@/pages/HomePage.vue";
 import SailpunkEastMap from "@/pages/SailpunkEastMap.vue";
 import EndlessEmpireMap from "@/pages/EndlessEmpireMap.vue";
 import MinskMetro from "@/pages/MinskMetro.vue";
+import ArgalForest from "@/pages/ArgalForest.vue";
 
 const routes = [
   {
@@ -25,6 +26,11 @@ const routes = [
     name: "minsk-metro",
     path: "/minskMetro",
     component: MinskMetro
+  },
+  {
+    name: "argal-forest",
+    path: "/argalForest",
+    component: ArgalForest
   }
 ];
 
