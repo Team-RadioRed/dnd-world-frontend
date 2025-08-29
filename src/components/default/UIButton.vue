@@ -1,6 +1,7 @@
 <script>
 export default {
     props: {
+        buttonName: String,
         clickMethod: Function
     }
 }
@@ -8,7 +9,7 @@ export default {
 
 
 <template>
-    <button @click="clickMethod" class="sailpunk-button">
+    <button @click="clickMethod(buttonName)" class="left-button">
         <slot></slot>
     </button>
 </template>

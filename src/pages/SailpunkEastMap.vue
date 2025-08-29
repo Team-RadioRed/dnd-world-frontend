@@ -2,16 +2,14 @@
 import MapCanvas from '@/components/default/MapCanvas.vue';
 import ObjectInfo from '@/components/object-info/ObjectInfo.vue';
 import PointCanvas from '@/components/default/PointCanvas.vue';
-import UIPanel from '@/components/sailpunk/UIPanel.vue';
-import ReturnButton from '@/components/default/ReturnButton.vue';
+import UIPanel from '@/components/default/UIPanel.vue';
 
 export default {
     components: {
         MapCanvas,
         PointCanvas,
         ObjectInfo,
-        UIPanel,
-        ReturnButton
+        UIPanel
     },
     computed: {
         mapData() { return this.$store.getters.MAP_DATA },
@@ -48,7 +46,6 @@ export default {
 <template>
     <ObjectInfo />
 
-    <ReturnButton />
     <UIPanel />
 
     <MapCanvas :mapData="mapData">

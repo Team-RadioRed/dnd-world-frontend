@@ -5,10 +5,14 @@
 /* Main */
 :root {
   --main-white: #f5e9dd;
+  --main-white-2down: #c4bab0;
+
   --main-black: #494949;
   
   --main-color: #e85d56;
   --main-color-2up: #ec7d77;
+  --main-color-2down: #b94a44;
+  --main-color-4down: #8b3733;
 }
 body {
   padding: 0px;
