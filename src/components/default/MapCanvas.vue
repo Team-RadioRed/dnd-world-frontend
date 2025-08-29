@@ -9,6 +9,7 @@ export default {
             cameraX: 0,
             cameraY: 0,
             isDragging: false,
+            hasMoved: false,
             dragStartX: 0,
             dragStartY: 0,
             initialCameraX: 0,
@@ -105,6 +106,7 @@ export default {
 
         handleDragStart(event) {
             this.isDragging = true;
+            this.hasMoved = false;
             this.dragStartX = event.clientX;
             this.dragStartY = event.clientY;
             this.initialCameraX = this.cameraX;
@@ -123,6 +125,10 @@ export default {
             const dx = event.clientX - this.dragStartX;
             const dy = event.clientY - this.dragStartY;
 
+            if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
+                this.hasMoved = true;
+            }
+
             this.cameraX = this.initialCameraX + dx;
             this.cameraY = this.initialCameraY + dy;
             this.applyBoundaries();
@@ -131,8 +137,18 @@ export default {
         },
 
         endDrag() {
+            if (this.isDragging && this.hasMoved) {
+                document.addEventListener('click', this.preventClickOnce, true);
+            }
+
             this.isDragging = false;
             this.initialPinchDistance = null;
+        },
+
+        preventClickOnce(e) {
+            e.stopImmediatePropagation();
+            e.preventDefault();
+            document.removeEventListener('click', this.preventClickOnce, true);
         },
 
         handlePinchStart(e) {
