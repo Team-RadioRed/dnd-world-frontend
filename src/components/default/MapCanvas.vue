@@ -4,6 +4,7 @@ import { IMG_URL } from '@/storage/constants';
 export default {
     data() {
         return {
+            padding: 300,
             scale: 1,
             cameraX: 0,
             cameraY: 0,
@@ -44,7 +45,27 @@ export default {
             return tiles;
         }
     },
+    mounted() {
+        this.centerCamera();
+    },
     methods: {
+        centerCamera() {
+            const tileSize = this.mapData.tileSize;
+            const scale = this.scale;
+
+            const mapWidth = this.mapData.cols * tileSize * scale;
+            const mapHeight = this.mapData.rows * tileSize * scale;
+
+            const containerWidth = this.$el.clientWidth;
+            const containerHeight = this.$el.clientHeight;
+
+            this.cameraX = (containerWidth - mapWidth) / 2;
+            this.cameraY = (containerHeight - mapHeight) / 2;
+
+            this.cameraX = this.cameraX + this.padding;
+            this.cameraY = this.cameraY + this.padding;
+        },
+
         tileStyle(tile) {
             const imageURL = `${this.imageURL}/map/r-${tile.y}_c-${tile.x}.jpg`;
             const tileSize = this.mapData.tileSize;
@@ -167,14 +188,22 @@ export default {
         },
 
         applyBoundaries() {
-            const documentElement = document.documentElement;
             const tileSize = this.mapData.tileSize;
 
-            const maxX = (this.mapData.cols * tileSize * this.scale) - documentElement.offsetWidth;
-            const maxY = (this.mapData.rows * tileSize * this.scale) - documentElement.offsetHeight;
+            const scaledMapWidth = this.mapData.cols * tileSize * this.scale;
+            const scaledMapHeight = this.mapData.rows * tileSize * this.scale;
 
-            this.cameraX = Math.min(0, Math.max(-maxX, this.cameraX));
-            this.cameraY = Math.min(0, Math.max(-maxY, this.cameraY));
+            const containerWidth = document.documentElement.clientWidth;
+            const containerHeight = document.documentElement.clientHeight;
+
+            const maxX = this.padding;
+            const minX = containerWidth - scaledMapWidth - this.padding;
+
+            const maxY = this.padding;
+            const minY = containerHeight - scaledMapHeight - this.padding;
+
+            this.cameraX = Math.min(maxX, Math.max(minX, this.cameraX));
+            this.cameraY = Math.min(maxY, Math.max(minY, this.cameraY));
         },
     },
 };
