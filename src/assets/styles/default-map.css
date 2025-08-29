@@ -3,7 +3,7 @@
   position: absolute;
   width: 40px;
   height: 100%;
-  background-color: var(--main-black);
+  background-color: var(--black);
   z-index: 300;
   padding: 10px;
   row-gap: 10px;
@@ -16,8 +16,8 @@
   width: 40px;
   height: 40px;
   cursor: pointer;
-  background-color: var(--main-color);
-  color: var(--main-white);
+  background-color: var(--color);
+  color: var(--white);
   padding: 5px;
   border: none;
   display: flex;
@@ -28,16 +28,16 @@
 }
 
 .left-button-disable {
-  background-color: var(--main-color-4down);
-  color: var(--main-white-2down);
+  background-color: var(--color-4down);
+  color: var(--white-2down);
 }
 .left-button-disable:hover {
-  background-color: var(--main-color-2down);
-  color: var(--main-white);
+  background-color: var(--color-2down);
+  color: var(--white);
 }
 
 .left-button:hover {
-  background-color: var(--main-color-2up);
+  background-color: var(--color-2up);
 }
 
 .left-bottom-button {
@@ -50,11 +50,11 @@
   position: absolute;
   width: 40px;
   height: 100%;
-  background-color: var(--main-black);
+  background-color: var(--black);
   z-index: 300;
   padding: 10px;
   left: 60px;
-  border-left: 1px solid var(--main-white);
+  border-left: 1px solid var(--white);
   display: flex;
   flex-direction: column;
   row-gap: 10px;
@@ -62,7 +62,6 @@
 
 /* Map */
 .map-container {
-  padding-left: 60px;
   width: 100vw;
   height: 100vh;
   cursor: grab;
@@ -98,19 +97,22 @@
   justify-content: center;
   align-items: center;
 
-  background-color: #434c5e;
-  color: #eceff4;
-  border-radius: 10px;
+  background-color: var(--black);
+  color: var(--white);
+  transition: 0.5s;
 }
-.point > div {
-  width: 16px;
-  height: 26px;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
+.point:hover {
+  background-color: var(--black-2up);
 }
-.point > label {
+.point-icon {
+  box-sizing: border-box;
+  height: 29px;
+  width: 15px;
+  padding: 5px;
+}
+.point-label {
   cursor: pointer;
-  margin: 5px 10px 5px 5px;
+  padding: 5px 10px 5px 10px;
   font-weight: bold;
   white-space: nowrap;
 }

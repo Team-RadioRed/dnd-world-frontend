@@ -14,7 +14,9 @@ export default {
         openObject() {
             this.$store.dispatch("OPEN_OBJECT", this.data);
         },
-        color() { return POINT_COLOR[this.data.type] }
+        color() {
+            return POINT_COLOR[this.data.type]
+        },
     }
 }
 </script>
@@ -22,7 +24,7 @@ export default {
 
 <template>
     <div class="point" :style="getPosition" @click="openObject" @touchend="openObject">
-        <div :style="{ backgroundColor: `${color}` }"></div>
-        <label>{{ data.name }}</label>
+        <div class="point-icon" :style="{ backgroundColor: `${color}` }" />
+        <label class="point-label">{{ data.name }}</label>
     </div>
 </template>

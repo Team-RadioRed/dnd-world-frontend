@@ -1,28 +1,29 @@
-@import "./sailpunk.css";
+@import "./object-info.css";
 @import "./home-page.css";
 @import "./default-map.css";
 
 /* Main */
 :root {
-  --main-white: #f5e9dd;
-  --main-white-2down: #c4bab0;
+  --white: #f5e9dd;
+  --white-2down: #c4bab0;
 
-  --main-black: #494949;
+  --black: #494949;
+  --black-2up: #6d6d6d;
   
-  --main-color: #e85d56;
-  --main-color-2up: #ec7d77;
-  --main-color-2down: #b94a44;
-  --main-color-4down: #8b3733;
+  --color: #e85d56;
+  --color-2up: #ec7d77;
+  --color-2down: #b94a44;
+  --color-4down: #8b3733;
 }
 body {
   padding: 0px;
   margin: 0px;
 
   font-family: 'Montserrat', sans-serif;
-  color: var(--main-black);
+  color: var(--black);
   font-size: 16px;
 
-  background-color: var(--main-white);
+  background-color: var(--white);
 }
 #app {
   width: 100%;

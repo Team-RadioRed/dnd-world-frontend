@@ -1,6 +1,6 @@
 <template>
     <svg fill="currentcolor" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink" width="800px" height="800px" viewBox="0 0 224 260"
+        xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" viewBox="0 0 224 260"
         enable-background="new 0 0 224 260" xml:space="preserve">
         <path d="M81.566,51.225v-6.34l7.954-12.45l2.536,4.15v7.147L81.566,51.225z M107.273,17.678v-2.536l21.442-8.3v2.075L107.273,17.678
 	z M132.635,6.842v2.767h3.92l14.986-2.767l-1.499-1.499L132.635,6.842z M160.072,6.842l1.383-3.689L172.292,2l-0.922,2.421
