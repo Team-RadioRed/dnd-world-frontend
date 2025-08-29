@@ -52,22 +52,19 @@ export default {
 
 
 <template>
-    <div class="info-container">
+    <div>
         <SDTTitle :title="data.name" :is-hide="data.isHideName" />
         <div class="dt-small-icon-container">
             <div class="dt-small-icon" v-for="(item, index) in objectArray" :key="index"
                 @click="() => { openChild(item) }">
+                <div class="dt-small-icon-info">
+                    <label class="dt-small-icon-info-title">{{ item.name }}</label>
+                    <label class="sub-text">{{ item.additionalName }}</label>
+                    <label class="dt-small-icon-tag">{{ item.fraction }}</label>
+                </div>
                 <div class="dt-small-icon-img">
                     <img :src="item.img" :style="isDeathStyle(item.isDeath)" />
                     <img v-if="item.isDeath" :src="getImage('skull.png')" class="dt-character-death-img">
-                    <div></div>
-                </div>
-                <div class="dt-small-icon-bottom">
-                    <div class="left-block">
-                        <label>{{ item.name }}</label>
-                        <label class="sub-text">{{ item.additionalName }}</label>
-                    </div>
-                    <label class="right-block">{{ item.fraction }}</label>
                 </div>
             </div>
         </div>

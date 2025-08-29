@@ -24,9 +24,10 @@ export default {
 
 <template>
     <div class="panel-fade" v-if="isShow">
+        <div class="panel-close" @click="closeAll" />
         <div class="info-controller">
-            <button @click="closeCurrent" v-if="objectList.length > 1">Назад</button>
-            <button @click="closeAll">Закрыть</button>
+            <button @click="closeCurrent" v-if="objectList.length > 1">◄</button>
+            <button @click="closeAll" class="info-controller-close">Закрыть</button>
         </div>
         <div class="info-panel">
             <div class="info-panel-title">
