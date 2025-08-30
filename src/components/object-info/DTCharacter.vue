@@ -13,7 +13,7 @@ export default {
 
 
 <template>
-    <div class="info-container">
+    <div>
         <SDTTitle :title="data.name" :is-hide="data.isHideName" />
         <img :src="data.img" class="dt-character-img">
         <label class="dt-character-text" v-for="(description, index) in data.description" :key="index">

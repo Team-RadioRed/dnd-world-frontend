@@ -13,7 +13,7 @@ export default {
 
 
 <template>
-    <div class="info-container info-column">
+    <div class="info-column">
         <SDTTitle :title="data.name" :is-hide="data.isHideName" />
         <label class="dt-text" v-for="(item, index) in data.description" :key="index">{{ item }}</label>
     </div>

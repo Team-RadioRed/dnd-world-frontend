@@ -20,7 +20,7 @@ export default {
 
 
 <template>
-    <div class="info-container info-column">
+    <div class="info-column">
         <SDTTitle :title="data.name" :is-hide="data.isHideName" />
         <div class="dt-stats-table-container">
             <table class="dt-stats-table">

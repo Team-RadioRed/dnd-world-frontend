@@ -13,12 +13,13 @@ export default {
 
 
 <template>
-    <div class="info-container info-column" style="row-gap: 10px;">
+    <div>
         <SDTTitle :title="data.name" :is-hide="data.isHideName" />
-        <div v-for="(description, index) in data.description" :key="index" class="dt-skill-container">
-            <div></div>
-            <label><b>{{ description.name }}</b></label>
-            <label> - {{ description.description }}</label>
+        <div class="info-column-row-gap">
+            <div v-for="(description, index) in data.description" :key="index" class="dt-skill-container">
+                <label class="dt-skill-title">◢ {{ description.name }}</label>
+                <label>{{ description.description }}</label>
+            </div>
         </div>
     </div>
 </template>

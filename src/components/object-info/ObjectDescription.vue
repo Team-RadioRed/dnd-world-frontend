@@ -1,6 +1,5 @@
 <script>
 import DTCharacter from './DTCharacter.vue';
-import DTNodes from './DTNodes.vue';
 import DTSkills from './DTSkills.vue';
 import DTSmallIcon from './DTSmallIcon.vue';
 import DTStats from './DTStats.vue';
@@ -26,8 +25,6 @@ export default {
                     return DTSkills;
                 case "sub-page":
                     return DTSubPage;
-                case "notes":
-                    return DTNodes;
             }
         }
     }

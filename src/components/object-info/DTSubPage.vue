@@ -31,13 +31,15 @@ export default {
 
 
 <template>
-    <div class="info-container info-column">
+    <div class="info-column">
         <SDTTitle :title="data.name" :is-hide="data.isHideName" />
         <div class="dt-big-image-list">
             <div v-for="(item, index) in objectArray" :key="index" class="dt-big-image-container"
                 @click="() => { openChild(item) }">
-                <label class="dt-big-image-text">{{ item.name }}</label>
                 <img :src="item.img" class="dt-big-image">
+                <div class="dt-big-image-text">
+                    <label>{{ item.name }}</label>
+                </div>
             </div>
         </div>
     </div>
