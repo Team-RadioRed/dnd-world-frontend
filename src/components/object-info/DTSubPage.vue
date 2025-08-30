@@ -1,5 +1,5 @@
 <script>
-import SDTTitle from './SDTTitle.vue';
+import SDTContainer from './SDTContainer.vue';
 
 export default {
     data() {
@@ -11,7 +11,7 @@ export default {
         data: Object
     },
     components: {
-        SDTTitle
+        SDTContainer
     },
     methods: {
         openChild(objectInfo) {
@@ -31,8 +31,7 @@ export default {
 
 
 <template>
-    <div class="info-column">
-        <SDTTitle :title="data.name" :is-hide="data.isHideName" />
+    <SDTContainer :title="data.name" :title-hide="data.isHideName">
         <div class="dt-big-image-list">
             <div v-for="(item, index) in objectArray" :key="index" class="dt-big-image-container"
                 @click="() => { openChild(item) }">
@@ -42,5 +41,5 @@ export default {
                 </div>
             </div>
         </div>
-    </div>
+    </SDTContainer>
 </template>

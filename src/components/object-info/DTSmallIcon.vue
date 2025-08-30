@@ -1,5 +1,5 @@
 <script>
-import SDTTitle from './SDTTitle.vue';
+import SDTContainer from './SDTContainer.vue';
 
 export default {
     data() {
@@ -14,7 +14,7 @@ export default {
         data: Object,
     },
     components: {
-        SDTTitle
+        SDTContainer
     },
     methods: {
         updateCharacter() {
@@ -52,8 +52,7 @@ export default {
 
 
 <template>
-    <div>
-        <SDTTitle :title="data.name" :is-hide="data.isHideName" />
+    <SDTContainer :title="data.name" :title-hide="data.isHideName">
         <div class="dt-small-icon-container">
             <div class="dt-small-icon" v-for="(item, index) in objectArray" :key="index"
                 @click="() => { openChild(item) }">
@@ -68,5 +67,5 @@ export default {
                 </div>
             </div>
         </div>
-    </div>
+    </SDTContainer>
 </template>

@@ -88,6 +88,11 @@
   font-size: 24px;
   font-weight: 600;
   padding: 5px 0px 5px 10px;
+  cursor: pointer;
+  transition: 0.5s;
+}
+.info-container-title:hover {
+  background-color: var(--white-2down);
 }
 
 
@@ -247,4 +252,12 @@
 }
 .dt-big-image-text > label {
   cursor: pointer;
+}
+
+/* Main Info */
+.dt-main-info-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+  padding: 0px 10px 0px 10px;
 }

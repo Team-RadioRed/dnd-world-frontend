@@ -1,12 +1,12 @@
 <script>
-import SDTTitle from './SDTTitle.vue';
+import SDTContainer from './SDTContainer.vue';
 
 export default {
     props: {
         data: Object
     },
     components: {
-        SDTTitle
+        SDTContainer
     },
     methods: {
         getModifier(value) {
@@ -20,8 +20,7 @@ export default {
 
 
 <template>
-    <div class="info-column">
-        <SDTTitle :title="data.name" :is-hide="data.isHideName" />
+    <SDTContainer :title="data.name" :title-hide="data.isHideName">
         <div class="dt-stats-table-container">
             <table class="dt-stats-table">
                 <thead>
@@ -43,5 +42,5 @@ export default {
                 </tbody>
             </table>
         </div>
-    </div>
+    </SDTContainer>
 </template>
