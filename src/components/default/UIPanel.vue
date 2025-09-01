@@ -167,7 +167,7 @@ export default {
         </UIButton>
 
         <!-- Return button -->
-        <RouterLink :to="{ name: 'home' }" class="left-button left-bottom-button">
+        <RouterLink :to="{ name: 'home' }" class="left-button return-menu-button">
             ◄
         </RouterLink>
     </div>

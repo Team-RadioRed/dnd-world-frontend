@@ -1,6 +1,6 @@
 /* Left panel */
 .left-panel {
-  position: absolute;
+  position: fixed;
   width: 40px;
   height: 100%;
   background-color: var(--black);
@@ -9,6 +9,16 @@
   row-gap: 10px;
   display: flex;
   flex-direction: column;
+}
+@media (max-width: 1100px) {
+  .left-panel {
+    width: 100%;
+    height: 40px;
+    bottom: 0px;
+    flex-direction: row;
+    row-gap: 0px;
+    column-gap: 10px;
+  }
 }
 
 .left-button {
@@ -26,6 +36,9 @@
   align-items: center;
   transition: 0.5s;
 }
+.left-button:hover {
+  background-color: var(--color-2up);
+}
 
 .left-button-disable {
   background-color: var(--color-4down);
@@ -36,18 +49,20 @@
   color: var(--white);
 }
 
-.left-button:hover {
-  background-color: var(--color-2up);
-}
-
-.left-bottom-button {
+.return-menu-button {
   position: absolute;
   bottom: 30px;
+}
+@media (max-width: 1100px) {
+  .return-menu-button {
+    right: 30px;
+    bottom: 10px;
+  }
 }
 
 /* Filter */
 .filter-panel {
-  position: absolute;
+  position: fixed;
   width: 40px;
   background-color: var(--black);
   z-index: 300;
@@ -57,6 +72,19 @@
   display: flex;
   flex-direction: column;
   row-gap: 10px;
+}
+@media (max-width: 1100px) {
+  .filter-panel {
+    width: auto;
+    height: 40px;
+    bottom: 60px;
+    left: 0px;
+    flex-direction: row;
+    row-gap: 0px;
+    column-gap: 10px;
+    border-left: none;
+    border-bottom: 1px solid var(--white);
+  }
 }
 
 /* Map */

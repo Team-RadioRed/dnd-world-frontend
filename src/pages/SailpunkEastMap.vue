@@ -1,6 +1,6 @@
 <script>
 import MapCanvas from '@/components/default/MapCanvas.vue';
-import ObjectInfo from '@/components/object-info/ObjectInfo.vue';
+import SDTObjectInfo from '@/components/object-info/SDTObjectInfo.vue';
 import PointCanvas from '@/components/default/PointCanvas.vue';
 import UIPanel from '@/components/default/UIPanel.vue';
 
@@ -8,7 +8,7 @@ export default {
     components: {
         MapCanvas,
         PointCanvas,
-        ObjectInfo,
+        SDTObjectInfo,
         UIPanel
     },
     computed: {
@@ -44,7 +44,7 @@ export default {
 
 
 <template>
-    <ObjectInfo />
+    <SDTObjectInfo />
 
     <UIPanel />
 
