@@ -1,24 +1,24 @@
 <script>
-import SDTTitle from './SDTTitle.vue';
+import SDTContainer from './SDTContainer.vue';
 
 export default {
     props: {
         data: Object
     },
     components: {
-        SDTTitle
+        SDTContainer
     }
 }
 </script>
 
 
 <template>
-    <div class="info-container info-column" style="row-gap: 10px;">
-        <SDTTitle :title="data.name" :is-hide="data.isHideName" />
-        <div v-for="(description, index) in data.description" :key="index" class="dt-skill-container">
-            <div></div>
-            <label><b>{{ description.name }}</b></label>
-            <label> - {{ description.description }}</label>
+    <SDTContainer :title="data.name" :title-hide="data.isHideName">
+        <div class="info-column-row-gap">
+            <div v-for="(description, index) in data.description" :key="index" class="dt-skill-container">
+                <label class="dt-skill-title">◢ {{ description.name }}</label>
+                <label>{{ description.description }}</label>
+            </div>
         </div>
-    </div>
+    </SDTContainer>
 </template>

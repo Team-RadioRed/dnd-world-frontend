@@ -6,7 +6,7 @@ export async function requestAxios(url) {
     method: "GET",
     url: `${API_URL}${url}`,
   }).then((response) => {
-    console.log("respons:", response);
+    console.log("response:", response);
     return response.data;
   });
 
