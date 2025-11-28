@@ -40,25 +40,19 @@ export default {
         // Получение параметров всех миров
         await this.$store.dispatch("LOAD_WORLDS");
         // Получение данных мира
-        await this.$store.dispatch("LOAD_CHARACTERS", {
-            project: this.$route.params.project
-        });
-        await this.$store.dispatch("LOAD_MAP_OBJECTS", {
-            project: this.$route.params.project
-        });
-        await this.$store.dispatch("LOAD_ADDITIONAL_PAGE", {
-            project: this.$route.params.project
-        });
+        await this.$store.dispatch("LOAD_CHARACTERS", this.$route.params.project);
+        await this.$store.dispatch("LOAD_MAP_OBJECTS", this.$route.params.project);
+        await this.$store.dispatch("LOAD_ADDITIONAL_PAGE", this.$route.params.project);
     }
 }
 </script>
 
 
 <template>
+    <!-- UI -->
     <SDTObjectInfo />
-
     <UIPanel />
-
+    <!-- Map -->
     <MapCanvas>
         <PointCanvas :mapObjects="mapObjects" />
     </MapCanvas>

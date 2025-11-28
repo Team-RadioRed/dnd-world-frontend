@@ -1,7 +1,8 @@
 import { requestAxios } from "@/assets/scripts/api";
 
-const worlds = {
+const worldsCollection = {
   state: () => ({
+    // Общая информация по всем мирам
     worlds: [],
   }),
   getters: {
@@ -31,4 +32,4 @@ const worlds = {
   },
 };
 
-export default worlds;
+export default worldsCollection;
