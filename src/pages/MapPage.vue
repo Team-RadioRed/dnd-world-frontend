@@ -12,7 +12,7 @@ export default {
         UIPanel
     },
     computed: {
-        mapData() { return this.$store.getters.MAP_DATA },
+        // Точки интереса на карте
         mapObjects() {
             const mapObjects = this.$store.getters.MAP_OBJECTS;
             if (Object.keys(mapObjects).length === 0) return [];
@@ -30,14 +30,25 @@ export default {
 
             return objectArray;
         },
+
+        // Параметры отображения
         showProvince() { return this.$store.getters.SHOW_PROVINCE },
         showCapital() { return this.$store.getters.SHOW_CAPITAL },
         showTown() { return this.$store.getters.SHOW_TOWN }
     },
     async mounted() {
-        await this.$store.dispatch("LOAD_CHARACTERS");
-        await this.$store.dispatch("LOAD_MAP_OBJECTS");
-        await this.$store.dispatch("LOAD_ADDITIONAL_PAGE");
+        // Получение параметров всех миров
+        await this.$store.dispatch("LOAD_WORLDS");
+        // Получение данных мира
+        await this.$store.dispatch("LOAD_CHARACTERS", {
+            project: this.$route.params.project
+        });
+        await this.$store.dispatch("LOAD_MAP_OBJECTS", {
+            project: this.$route.params.project
+        });
+        await this.$store.dispatch("LOAD_ADDITIONAL_PAGE", {
+            project: this.$route.params.project
+        });
     }
 }
 </script>
@@ -48,7 +59,7 @@ export default {
 
     <UIPanel />
 
-    <MapCanvas :mapData="mapData">
+    <MapCanvas>
         <PointCanvas :mapObjects="mapObjects" />
     </MapCanvas>
 </template>

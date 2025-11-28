@@ -1,5 +1,5 @@
 <script>
-import { IMG_URL } from '@/storage/constants';
+import { getImageServer } from '@/assets/scripts/images';
 
 export default {
     data() {
@@ -20,13 +20,8 @@ export default {
             pinchCenterY: 0,
         }
     },
-    props: {
-        mapData: Object,
-    },
     computed: {
-        imageURL() {
-            return IMG_URL;
-        },
+        mapData() { return this.$store.getters.WORLD(this.$route.params.project) },
         containerStyle() {
             return {
                 transform: `translate(${this.cameraX}px, ${this.cameraY}px) scale(${this.scale})`,
@@ -35,10 +30,11 @@ export default {
         visibleTiles() {
             const tiles = [];
             const viewport = this.calculateViewport();
+            if (!viewport) return;
 
             for (let x = viewport.startCol; x <= viewport.endCol; x++) {
                 for (let y = viewport.startRow; y <= viewport.endRow; y++) {
-                    if (x >= 0 && y >= 0 && x < this.mapData.cols && y < this.mapData.rows) {
+                    if (x >= 0 && y >= 0 && x < this.mapData.params.cols && y < this.mapData.params.rows) {
                         tiles.push({ x, y });
                     }
                 }
@@ -46,30 +42,27 @@ export default {
             return tiles;
         }
     },
-    mounted() {
-        this.centerCamera();
-    },
     methods: {
-        centerCamera() {
-            const tileSize = this.mapData.tileSize;
-            const scale = this.scale;
+        // centerCamera() {
+        //     const tileSize = this.mapData.params.tileSize;
+        //     const scale = this.scale;
 
-            const mapWidth = this.mapData.cols * tileSize * scale;
-            const mapHeight = this.mapData.rows * tileSize * scale;
+        //     const mapWidth = this.mapData.params.cols * tileSize * scale;
+        //     const mapHeight = this.mapData.params.rows * tileSize * scale;
 
-            const containerWidth = this.$el.clientWidth;
-            const containerHeight = this.$el.clientHeight;
+        //     const containerWidth = this.$el.clientWidth;
+        //     const containerHeight = this.$el.clientHeight;
 
-            this.cameraX = (containerWidth - mapWidth) / 2;
-            this.cameraY = (containerHeight - mapHeight) / 2;
+        //     this.cameraX = (containerWidth - mapWidth) / 2;
+        //     this.cameraY = (containerHeight - mapHeight) / 2;
 
-            this.cameraX = this.cameraX + this.padding;
-            this.cameraY = this.cameraY + this.padding;
-        },
+        //     this.cameraX = this.cameraX + this.padding;
+        //     this.cameraY = this.cameraY + this.padding;
+        // },
 
         tileStyle(tile) {
-            const imageURL = `${this.imageURL}/map/r-${tile.y}_c-${tile.x}.jpg`;
-            const tileSize = this.mapData.tileSize;
+            const imageURL = getImageServer(`map/r-${tile.y}_c-${tile.x}.jpg`, this.mapData.name);
+            const tileSize = this.mapData.params.tileSize;
 
             return {
                 width: `${tileSize}px`,
@@ -80,7 +73,8 @@ export default {
         },
 
         calculateViewport() {
-            const scaledTileSize = this.mapData.tileSize * this.scale;
+            if (!this.mapData) return;
+            const scaledTileSize = this.mapData.params.tileSize * this.scale;
             const containerWidth = window.screen.availWidth;
             const containerHeight = window.screen.availHeight;
 
@@ -173,7 +167,10 @@ export default {
             const scaleDelta = distance / this.initialPinchDistance;
             const newScale = this.initialScale * scaleDelta;
 
-            if (newScale < this.mapData.minScale || newScale > this.mapData.maxScale) return;
+            if (
+                newScale < this.mapData.params.minScale ||
+                newScale > this.mapData.params.maxScale
+            ) return;
 
             const rect = e.target.getBoundingClientRect();
             const centerX = (t1.clientX + t2.clientX) / 2 - rect.left;
@@ -190,7 +187,7 @@ export default {
             const delta = e.deltaY > 0 ? 0.9 : 1.1;
             const newScale = this.scale * delta;
 
-            if (newScale < this.mapData.minScale || newScale > this.mapData.maxScale) return;
+            if (newScale < this.mapData.params.minScale || newScale > this.mapData.params.maxScale) return;
 
             const rect = e.target.getBoundingClientRect();
             const mouseX = e.clientX - rect.left;
@@ -204,10 +201,10 @@ export default {
         },
 
         applyBoundaries() {
-            const tileSize = this.mapData.tileSize;
+            const tileSize = this.mapData.params.tileSize;
 
-            const scaledMapWidth = this.mapData.cols * tileSize * this.scale;
-            const scaledMapHeight = this.mapData.rows * tileSize * this.scale;
+            const scaledMapWidth = this.mapData.params.cols * tileSize * this.scale;
+            const scaledMapHeight = this.mapData.params.rows * tileSize * this.scale;
 
             const containerWidth = document.documentElement.clientWidth;
             const containerHeight = document.documentElement.clientHeight;

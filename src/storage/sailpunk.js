@@ -11,21 +11,10 @@ const sailpunk = {
     isShowProvince: true,
     isShowCapital: true,
     isShowTown: true,
-
-    mapData: {
-      tileSize: 256,
-      minScale: 0.5,
-      maxScale: 2,
-      cols: 14,
-      rows: 10,
-    },
   }),
   getters: {
     MAP_OBJECTS(state) {
       return state.mapObject;
-    },
-    MAP_DATA(state) {
-      return state.mapData;
     },
     CHARACTERS: (state) => (section) => {
       return state.characters[section];
@@ -79,11 +68,11 @@ const sailpunk = {
     },
   },
   actions: {
-    async LOAD_MAP_OBJECTS(context) {
+    async LOAD_MAP_OBJECTS(context, params) {
       const mapObject = context.getters.MAP_OBJECTS;
       if (Object.keys(mapObject).length !== 0) return;
 
-      const newMapObject = await requestAxios("/api/mapObject");
+      const newMapObject = await requestAxios("/api/mapObject", params);
       const mapObjectCollection = {};
       newMapObject.forEach((object, index) => {
         if (mapObjectCollection[object["type"]] == null) {
@@ -94,12 +83,12 @@ const sailpunk = {
 
       context.commit("MAP_OBJECTS", mapObjectCollection);
     },
-    async LOAD_CHARACTERS(context) {
+    async LOAD_CHARACTERS(context, params) {
       const characters = context.getters.CHARACTERS_ALL;
 
       if (Object.keys(characters).length !== 0) return;
 
-      const newCharacters = await requestAxios("/api/character");
+      const newCharacters = await requestAxios("/api/character", params);
       const charactersObject = {};
       const charactersDictionary = {};
 
@@ -118,11 +107,11 @@ const sailpunk = {
       context.commit("CHARACTERS", charactersObject);
       context.commit("CHARACTERS_DICTIONARY", charactersDictionary);
     },
-    async LOAD_ADDITIONAL_PAGE(context) {
+    async LOAD_ADDITIONAL_PAGE(context, params) {
       const subPage = context.getters.SUB_PAGE;
       if (subPage != null) return;
 
-      const newSubPage = await requestAxios("/api/subPage");
+      const newSubPage = await requestAxios("/api/subPage", params);
       const subPageObject = {};
 
       newSubPage.forEach((page) => {
