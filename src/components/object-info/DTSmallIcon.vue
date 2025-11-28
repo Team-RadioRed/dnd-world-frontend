@@ -23,7 +23,7 @@ export default {
         updateCharacter() {
             this.objectArray = [];
             this.data.description.forEach((id) => {
-                this.objectArray.push(this.$store.getters.CHARACTER_BY_NAME(id));
+                this.objectArray.push(this.$store.getters.CHARACTER_BY_NAME(this.$route.params.project, id));
             });
         },
         openChild(objectInfo) {
@@ -61,8 +61,9 @@ export default {
                     <label class="dt-small-icon-tag">{{ item.fraction }}</label>
                 </div>
                 <div class="dt-small-icon-img">
-                    <img :src="item.img" :style="isDeathStyle(item.isDeath)" />
-                    <img v-if="item.isDeath" :src="getImage('skull.png')" class="dt-character-death-img">
+                    <img :src="getImageServer(item.img, this.$route.params.project)"
+                        :style="isDeathStyle(item.isDeath)" />
+                    <img v-if="item.isDeath" :src="getImageLocal('skull.png')" class="dt-character-death-img">
                 </div>
             </div>
         </div>

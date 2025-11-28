@@ -14,8 +14,8 @@ export default {
     computed: {
         // Точки интереса на карте
         mapObjects() {
-            const mapObjects = this.$store.getters.MAP_OBJECTS;
-            if (Object.keys(mapObjects).length === 0) return [];
+            const mapObjects = this.$store.getters.MAP_OBJECTS(this.$route.params.project);
+            if (!mapObjects) return [];
 
             let objectArray = [];
             if (this.showProvince) {

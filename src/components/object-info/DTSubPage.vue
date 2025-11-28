@@ -1,5 +1,6 @@
 <script>
 import SDTContainer from './SDTContainer.vue';
+import { getImageServer } from '@/assets/scripts/images';
 
 export default {
     data() {
@@ -14,6 +15,7 @@ export default {
         SDTContainer
     },
     methods: {
+        getImageServer,
         openChild(objectInfo) {
             this.$store.dispatch("OPEN_OBJECT", objectInfo);
         }
@@ -23,7 +25,7 @@ export default {
 
         this.objectArray = [];
         this.data.description.forEach((id) => {
-            this.objectArray.push(this.$store.getters.SUB_PAGE_BY_NAME(id));
+            this.objectArray.push(this.$store.getters.SUB_PAGE_BY_NAME(this.$route.params.project, id));
         });
     },
 }
@@ -35,7 +37,7 @@ export default {
         <div class="dt-big-image-list">
             <div v-for="(item, index) in objectArray" :key="index" class="dt-big-image-container"
                 @click="() => { openChild(item) }">
-                <img :src="item.img" class="dt-big-image">
+                <img :src="getImageServer(item.img, this.$route.params.project)" class="dt-big-image">
                 <div class="dt-big-image-text">
                     <label>{{ item.name }}</label>
                 </div>

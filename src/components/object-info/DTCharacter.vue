@@ -19,7 +19,7 @@ export default {
 <template>
     <SDTContainer :title="data.name" :title-hide="data.isHideName">
         <div>
-            <img :src="getImageServer(data.img, 'sailpunk')" class="dt-character-img">
+            <img :src="getImageServer(data.img, this.$route.params.project)" class="dt-character-img">
             <label class="dt-character-text" v-for="(description, index) in data.description" :key="index">
                 {{ description }}
             </label>

@@ -50,7 +50,6 @@ const worldsData = {
       state.mapObject[project] = value;
     },
     CHARACTERS(state, { project, value }) {
-      console.log(project, value);
       state.characters[project] = value;
     },
     CHARACTERS_STATE(state, { project, section, value }) {
@@ -103,7 +102,6 @@ const worldsData = {
       });
       const charactersObject = {};
       const charactersDictionary = {};
-      console.log(newCharacters);
 
       newCharacters.forEach((character) => {
         // Добавление персонажа в словарь
