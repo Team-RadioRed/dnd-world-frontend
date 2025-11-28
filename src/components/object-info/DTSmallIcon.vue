@@ -1,5 +1,6 @@
 <script>
 import SDTContainer from './SDTContainer.vue';
+import { getImageServer, getImageLocal } from '@/assets/scripts/images';
 
 export default {
     data() {
@@ -17,6 +18,8 @@ export default {
         SDTContainer
     },
     methods: {
+        getImageServer,
+        getImageLocal,
         updateCharacter() {
             this.objectArray = [];
             this.data.description.forEach((id) => {
@@ -33,10 +36,6 @@ export default {
             else {
                 return "";
             }
-        },
-        getImage(name) {
-            const url = new URL(`../../assets/images/${name}`, import.meta.url).href;
-            return url;
         }
     },
     watch: {

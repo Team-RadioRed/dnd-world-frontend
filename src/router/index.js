@@ -1,37 +1,19 @@
 import { createWebHistory, createRouter } from "vue-router";
 
 import HomePage from "@/pages/HomePage.vue";
-import SailpunkEastMap from "@/pages/SailpunkEastMap.vue";
-import EndlessEmpireMap from "@/pages/EndlessEmpireMap.vue";
-import MinskMetro from "@/pages/MinskMetro.vue";
-import ArgalForest from "@/pages/ArgalForest.vue";
+import MapPage from "@/pages/MapPage.vue";
 
 const routes = [
   {
     name: "home",
     path: "/",
-    component: HomePage
+    component: HomePage,
   },
   {
-    name: "sailpunk-eastmap",
-    path: "/sailpunk/eastMap",
-    component: SailpunkEastMap
+    name: "map",
+    path: "/map/:project",
+    component: MapPage,
   },
-  {
-    name: "endless-empire",
-    path: "/endlessEmpire/worldMap",
-    component: EndlessEmpireMap
-  },
-  {
-    name: "minsk-metro",
-    path: "/minskMetro",
-    component: MinskMetro
-  },
-  {
-    name: "argal-forest",
-    path: "/argalForest",
-    component: ArgalForest
-  }
 ];
 
 const router = createRouter({

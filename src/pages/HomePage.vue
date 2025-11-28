@@ -1,6 +1,6 @@
 <script>
 import LinkComponent from '@/components/home-page/LinkComponent.vue';
-import { VERSION, HOME_PAGES } from '@/storage/constants';
+import { VERSION } from '@/storage/constants';
 
 export default {
     components: {
@@ -8,7 +8,10 @@ export default {
     },
     computed: {
         version() { return VERSION },
-        links() { return HOME_PAGES }
+        worlds() { return this.$store.getters.WORLDS },
+    },
+    async mounted() {
+        await this.$store.dispatch("LOAD_WORLDS");
     }
 }
 </script>
@@ -22,7 +25,7 @@ export default {
         </div>
 
         <div class="home-page-url-container">
-            <LinkComponent v-for="(link, index) in links" :key="index" :index="index" :link="link" />
+            <LinkComponent v-for="(world, index) in worlds" :key="index" :index="index" :data="world" />
         </div>
     </div>
 </template>

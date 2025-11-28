@@ -1,24 +1,29 @@
 <script>
+import { getImageServer } from '@/assets/scripts/images';
+
 export default {
     props: {
         index: Number,
-        link: Object
+        data: Object
     },
     computed: {
         fixIndex() {
             return this.index.toString().padStart(3, 0);
         }
+    },
+    methods: {
+        getImageServer
     }
 }
 </script>
 
 
 <template>
-    <RouterLink :to="{ name: link.name }" class="home-page-url-component">
-        <img :src="`https://radiored.ru/images/worlds/w${fixIndex}.jpg`" class="home-page-url-image">
+    <RouterLink :to="{ name: 'map', params: { project: data.name } }" class="home-page-url-component">
+        <img :src="getImageServer(data.image)" class="home-page-url-image">
         <div class="home-page-url-text-container">
-            <label class="home-page-url-title">>> {{ link.title }}</label>
-            <label class="home-page-url-description">{{ link.description }}</label>
+            <label class="home-page-url-title">>> {{ data.title }}</label>
+            <label class="home-page-url-description">{{ data.description }}</label>
         </div>
     </RouterLink>
 </template>

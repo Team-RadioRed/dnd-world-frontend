@@ -1,5 +1,6 @@
 <script>
 import SDTContainer from './SDTContainer.vue';
+import { getImageServer } from '@/assets/scripts/images';
 
 export default {
     props: {
@@ -7,6 +8,9 @@ export default {
     },
     components: {
         SDTContainer
+    },
+    methods: {
+        getImageServer
     }
 }
 </script>
@@ -15,7 +19,7 @@ export default {
 <template>
     <SDTContainer :title="data.name" :title-hide="data.isHideName">
         <div>
-            <img :src="data.img" class="dt-character-img">
+            <img :src="getImageServer(data.img, 'sailpunk')" class="dt-character-img">
             <label class="dt-character-text" v-for="(description, index) in data.description" :key="index">
                 {{ description }}
             </label>
