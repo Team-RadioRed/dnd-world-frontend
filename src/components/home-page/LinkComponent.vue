@@ -19,7 +19,8 @@ export default {
 
 
 <template>
-    <RouterLink :to="{ name: 'map', params: { project: data.name } }" class="home-page-url-component">
+    <RouterLink :to="{ name: 'map', params: { project: data.name } }"
+        :class="data.isEnable ? 'home-page-url-component' : 'home-page-url-disable'">
         <img :src="getImageServer(data.image)" class="home-page-url-image">
         <div class="home-page-url-text-container">
             <label class="home-page-url-title">>> {{ data.title }}</label>

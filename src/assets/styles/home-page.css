@@ -40,6 +40,15 @@
 .home-page-url-component:hover {
     border-right: 40px solid var(--color);
 }
+.home-page-url-disable {
+    background-color: var(--black);
+    display: flex;
+    flex-direction: row;
+    height: 100px;
+    text-decoration: none;
+    opacity: 0.7;
+    pointer-events: none;
+}
 
 .home-page-url-image {
     flex: 0 0 150px;
