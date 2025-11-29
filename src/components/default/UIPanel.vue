@@ -1,9 +1,5 @@
 <script>
 import SVGLiner from "./SVGLiner.vue";
-import IconTag from "@/components/svg/IconTag.vue";
-import IconCastle from "@/components/svg/IconCastle.vue";
-import IconCountry from "@/components/svg/IconCountry.vue";
-import IconVillage from "@/components/svg/IconVillage.vue";
 import UIButton from "@/components/default/UIButton.vue";
 import UIToggleButton from "@/components/default/UIToggleButton.vue";
 import { getImageServer } from "@/assets/scripts/images";
@@ -12,24 +8,12 @@ export default {
     data() {
         return {
             isShowFilter: false,
-            filterList: {
-                "PROVINCE": {
-                    icon: IconCountry
-                },
-                "CAPITAL": {
-                    icon: IconCastle
-                },
-                "TOWN": {
-                    icon: IconVillage
-                }
-            }
         }
     },
     components: {
         SVGLiner,
         UIButton,
-        UIToggleButton,
-        IconTag
+        UIToggleButton
     },
     computed: {
         worldParams() {
@@ -37,32 +21,26 @@ export default {
             if (!world) return [];
             return this.$store.getters.WORLD(this.$route.params.project)
         },
-
-        showProvince() { return this.$store.getters.SHOW_PROVINCE },
-        showCapital() { return this.$store.getters.SHOW_CAPITAL },
-        showTown() { return this.$store.getters.SHOW_TOWN }
+        filters() { return this.$store.getters.FILTERS(this.$route.params.project) },
     },
     methods: {
         getImageServer,
+        checkFilters() {
+            if (!this.worldParams) return false;
+            if (this.worldParams.filters.length === 0) return false;
+            return true;
+        },
         toggleVisible() {
             this.isShowFilter = !this.isShowFilter;
         },
         toggleFilter(name) {
-            let propertyName = `SHOW_${name}`;
-            let value = null;
-            switch (name) {
-                case "PROVINCE":
-                    value = this.showProvince;
-                    break;
-                case "CAPITAL":
-                    value = this.showCapital;
-                    break;
-                case "TOWN":
-                    value = this.showTown;
-                    break;
-            }
+            const filter = this.filters.find((filter) => filter.name === name);
 
-            this.$store.commit(propertyName, !value);
+            this.$store.commit("FILTER_STATE", {
+                project: this.$route.params.project,
+                name: name,
+                value: !filter.state
+            });
         },
         showPanel(name) {
             const template = this.worldParams.bottomPanel.find(params => params.name === name);
@@ -85,14 +63,8 @@ export default {
             });
         },
         getState(name) {
-            switch (name) {
-                case "PROVINCE":
-                    return this.showProvince;
-                case "CAPITAL":
-                    return this.showCapital;
-                case "TOWN":
-                    return this.showTown;
-            }
+            const filter = this.filters.find((filter) => filter.name === name);
+            return filter.state;
         }
     }
 }
@@ -101,16 +73,16 @@ export default {
 
 <template>
     <div v-if="isShowFilter" class="filter-panel">
-        <UIToggleButton v-for="(value, name) in filterList" :key="name" :is-active="getState(name)" :name-filter="name"
-            :click-method="toggleFilter">
-            <component :is="value.icon" />
+        <UIToggleButton v-for="(value, index) in worldParams.filters" :key="index" :is-active="getState(value.name)"
+            :name-filter="value.name" :click-method="toggleFilter">
+            <SVGLiner :svgPath="value.icon" class="left-button" />
         </UIToggleButton>
     </div>
 
     <div class="left-panel">
         <!-- Filter -->
-        <UIButton :click-method="toggleVisible">
-            <IconTag />
+        <UIButton :click-method="toggleVisible" v-if="checkFilters">
+            <SVGLiner svgPath="svg/tag.svg" class="left-button" />
         </UIButton>
 
         <!-- Buttons -->

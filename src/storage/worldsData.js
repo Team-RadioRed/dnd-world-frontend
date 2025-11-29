@@ -2,19 +2,12 @@ import { requestAxios } from "@/assets/scripts/api";
 
 const worldsData = {
   state: () => ({
-    // Данные миров, разделены по блокам
     characters: {},
     mapObject: {},
     charactersDictionary: {},
     subPage: {},
-
-    // Отображаемые параметры мира
-    isShowProvince: true,
-    isShowCapital: true,
-    isShowTown: true,
   }),
   getters: {
-    // Геттеры на данные
     MAP_OBJECTS: (state) => (project) => {
       return state.mapObject[project];
     },
@@ -33,19 +26,8 @@ const worldsData = {
     SUB_PAGE_BY_NAME: (state) => (project, id) => {
       return state.subPage[project][id];
     },
-    // Геттеры на видимость
-    SHOW_PROVINCE(state) {
-      return state.isShowProvince;
-    },
-    SHOW_CAPITAL(state) {
-      return state.isShowCapital;
-    },
-    SHOW_TOWN(state) {
-      return state.isShowTown;
-    },
   },
   mutations: {
-    // Сеттеры на данные
     MAP_OBJECTS(state, { project, value }) {
       state.mapObject[project] = value;
     },
@@ -60,16 +42,6 @@ const worldsData = {
     },
     SUB_PAGE(state, { project, value }) {
       state.subPage[project] = value;
-    },
-    // Сеттеры на видимость
-    SHOW_PROVINCE(state, value) {
-      state.isShowProvince = value;
-    },
-    SHOW_CAPITAL(state, value) {
-      state.isShowCapital = value;
-    },
-    SHOW_TOWN(state, value) {
-      state.isShowTown = value;
     },
   },
   actions: {

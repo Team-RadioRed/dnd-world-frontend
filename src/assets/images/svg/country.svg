@@ -1,5 +1,4 @@
-<template>
-    <svg fill="currentcolor" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+<svg fill="currentcolor" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" viewBox="0 0 224 260"
         enable-background="new 0 0 224 260" xml:space="preserve">
         <path d="M81.566,51.225v-6.34l7.954-12.45l2.536,4.15v7.147L81.566,51.225z M107.273,17.678v-2.536l21.442-8.3v2.075L107.273,17.678
@@ -15,4 +14,3 @@
 	H212.87z M31.419,203.741h-2.997l-16.831-5.995l-9.222,1.614v9.684l3.766,3.92l4.534-1.614v-2.767l4.842-1.614l11.297,4.381v2.997
 	l5.764,1.844l14.756-7.147l3.92-5.303l-14.295-5.995L31.419,203.741z" />
     </svg>
-</template>

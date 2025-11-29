@@ -1,5 +1,5 @@
 <script>
-import { POINT_COLOR } from '@/storage/constants';
+import { DEFAULT_POINT_COLOR } from '@/storage/constants';
 
 export default {
     props: {
@@ -15,7 +15,8 @@ export default {
             this.$store.dispatch("OPEN_OBJECT", this.data);
         },
         color() {
-            return POINT_COLOR[this.data.type]
+            const filter = this.$store.getters.FILTER_VALUE(this.$route.params.project, this.data.type);
+            return filter.color ? filter.color : DEFAULT_POINT_COLOR;
         },
     }
 }
@@ -25,6 +26,6 @@ export default {
 <template>
     <div class="point" :style="getPosition" @click="openObject" @touchend="openObject">
         <div class="point-icon" :style="{ backgroundColor: `${color}` }" />
-        <label class="point-label">{{ data.name }}</label>
+        <label class="point-label">{{ filters }}{{ data.name }}</label>
     </div>
 </template>

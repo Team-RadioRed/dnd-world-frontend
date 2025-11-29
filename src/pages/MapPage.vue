@@ -22,23 +22,21 @@ export default {
 
             // Получение данных для отображения по фильтрам
             let objectArray = [];
-            if (this.showProvince && mapObjects["province"]) {
-                objectArray = objectArray.concat(mapObjects["province"]);
-            }
-            if (this.showCapital && mapObjects["capital"]) {
-                objectArray = objectArray.concat(mapObjects["capital"]);
-            }
-            if (this.showTown && mapObjects["town"]) {
-                objectArray = objectArray.concat(mapObjects["town"]);
-            }
+            Object.keys(mapObjects).forEach((name) => {
+                const filter = this.$store.getters.FILTER_VALUE(this.$route.params.project, name);
+
+                if (filter) {
+                    if (filter.state) {
+                        objectArray = objectArray.concat(mapObjects[name]);
+                    }
+                }
+                else {
+                    objectArray = objectArray.concat(mapObjects[name]);
+                }
+            });
 
             return objectArray;
         },
-
-        // Параметры отображения
-        showProvince() { return this.$store.getters.SHOW_PROVINCE },
-        showCapital() { return this.$store.getters.SHOW_CAPITAL },
-        showTown() { return this.$store.getters.SHOW_TOWN }
     },
     async mounted() {
         // Получение параметров всех миров
