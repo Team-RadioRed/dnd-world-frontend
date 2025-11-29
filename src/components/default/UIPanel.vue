@@ -1,14 +1,12 @@
 <script>
-import IconTemple from "@/components/svg/IconTemple.vue";
-import IconCompas from "@/components/svg/IconCompas.vue";
-import IconTeam from "@/components/svg/IconTeam.vue";
-import IconCrown from "@/components/svg/IconCrown.vue";
+import SVGLiner from "./SVGLiner.vue";
 import IconTag from "@/components/svg/IconTag.vue";
 import IconCastle from "@/components/svg/IconCastle.vue";
 import IconCountry from "@/components/svg/IconCountry.vue";
 import IconVillage from "@/components/svg/IconVillage.vue";
 import UIButton from "@/components/default/UIButton.vue";
 import UIToggleButton from "@/components/default/UIToggleButton.vue";
+import { getImageServer } from "@/assets/scripts/images";
 
 export default {
     data() {
@@ -24,77 +22,28 @@ export default {
                 "TOWN": {
                     icon: IconVillage
                 }
-            },
-            buttonList: {
-                "GODS": {
-                    icon: IconTemple,
-                    title: "Боги",
-                    description: [
-                        {
-                            name: "Пантеон",
-                            tag: "pantheon",
-                        },
-                        {
-                            name: "Малые боги",
-                            tag: "smallGods"
-                        },
-                        {
-                            name: "Забытые боги",
-                            tag: "forgottenGods"
-                        },
-                        {
-                            name: "Древние боги",
-                            tag: "oldGods"
-                        }
-                    ]
-                },
-                "EMPIRE": {
-                    icon: IconCrown,
-                    title: "Персонажи из империи",
-                    description: [
-                        {
-                            name: "Название",
-                            tag: "empire",
-                            isHideName: true
-                        }
-                    ]
-                },
-                "PARTNERS": {
-                    icon: IconTeam,
-                    title: "Персонажи напарники",
-                    description: [
-                        {
-                            name: "Название",
-                            tag: "partners",
-                            isHideName: true
-                        }
-                    ]
-                },
-                "WANDERING": {
-                    icon: IconCompas,
-                    title: "Странствующие персонажи",
-                    description: [
-                        {
-                            name: "Название",
-                            tag: "wanderer",
-                            isHideName: true
-                        }
-                    ]
-                }
             }
         }
     },
     components: {
+        SVGLiner,
         UIButton,
         UIToggleButton,
         IconTag
     },
     computed: {
+        worldParams() {
+            const world = this.$store.getters.WORLD(this.$route.params.project);
+            if (!world) return [];
+            return this.$store.getters.WORLD(this.$route.params.project)
+        },
+
         showProvince() { return this.$store.getters.SHOW_PROVINCE },
         showCapital() { return this.$store.getters.SHOW_CAPITAL },
         showTown() { return this.$store.getters.SHOW_TOWN }
     },
     methods: {
+        getImageServer,
         toggleVisible() {
             this.isShowFilter = !this.isShowFilter;
         },
@@ -116,9 +65,11 @@ export default {
             this.$store.commit(propertyName, !value);
         },
         showPanel(name) {
+            const template = this.worldParams.bottomPanel.find(params => params.name === name);
             const description = [];
 
-            this.buttonList[name].description.forEach((value) => {
+            // Добавление данных в объект с учётом тега
+            template.description.forEach((value) => {
                 description.push({
                     name: value.name,
                     type: "small-icon",
@@ -127,8 +78,9 @@ export default {
                 });
             });
 
+            // Открытие новой панели
             this.$store.dispatch("OPEN_OBJECT", {
-                name: this.buttonList[name].title,
+                name: template.title,
                 description: description
             });
         },
@@ -162,8 +114,9 @@ export default {
         </UIButton>
 
         <!-- Buttons -->
-        <UIButton v-for="(value, name) in buttonList" :key="name" :click-method="showPanel" :button-name="name">
-            <component :is="value.icon" />
+        <UIButton v-for="(value, index) in worldParams.bottomPanel" :key="index" :click-method="showPanel"
+            :button-name="value.name">
+            <SVGLiner :svgPath="value.icon" class="left-button" />
         </UIButton>
 
         <!-- Return button -->
