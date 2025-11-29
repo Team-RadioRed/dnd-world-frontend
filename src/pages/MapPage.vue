@@ -15,16 +15,20 @@ export default {
         // Точки интереса на карте
         mapObjects() {
             const mapObjects = this.$store.getters.MAP_OBJECTS(this.$route.params.project);
-            if (!mapObjects) return [];
 
+            // Проверка что данные есть
+            if (!mapObjects) return [];
+            if (Object.keys(mapObjects).length === 0) return [];
+
+            // Получение данных для отображения по фильтрам
             let objectArray = [];
-            if (this.showProvince) {
+            if (this.showProvince && mapObjects["province"]) {
                 objectArray = objectArray.concat(mapObjects["province"]);
             }
-            if (this.showCapital) {
+            if (this.showCapital && mapObjects["capital"]) {
                 objectArray = objectArray.concat(mapObjects["capital"]);
             }
-            if (this.showTown) {
+            if (this.showTown && mapObjects["town"]) {
                 objectArray = objectArray.concat(mapObjects["town"]);
             }
 

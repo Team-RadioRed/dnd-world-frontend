@@ -43,22 +43,22 @@ export default {
         }
     },
     methods: {
-        // centerCamera() {
-        //     const tileSize = this.mapData.params.tileSize;
-        //     const scale = this.scale;
+        centerCamera() {
+            const tileSize = this.mapData.params.tileSize;
+            const scale = this.scale;
 
-        //     const mapWidth = this.mapData.params.cols * tileSize * scale;
-        //     const mapHeight = this.mapData.params.rows * tileSize * scale;
+            const mapWidth = this.mapData.params.cols * tileSize * scale;
+            const mapHeight = this.mapData.params.rows * tileSize * scale;
 
-        //     const containerWidth = this.$el.clientWidth;
-        //     const containerHeight = this.$el.clientHeight;
+            const containerWidth = this.$el.clientWidth;
+            const containerHeight = this.$el.clientHeight;
 
-        //     this.cameraX = (containerWidth - mapWidth) / 2;
-        //     this.cameraY = (containerHeight - mapHeight) / 2;
+            this.cameraX = (containerWidth - mapWidth) / 2;
+            this.cameraY = (containerHeight - mapHeight) / 2;
 
-        //     this.cameraX = this.cameraX + this.padding;
-        //     this.cameraY = this.cameraY + this.padding;
-        // },
+            this.cameraX = this.cameraX + this.padding;
+            this.cameraY = this.cameraY + this.padding;
+        },
 
         tileStyle(tile) {
             const imageURL = getImageServer(`map/r-${tile.y}_c-${tile.x}.jpg`, this.mapData.name);
@@ -219,6 +219,13 @@ export default {
             this.cameraY = Math.min(maxY, Math.max(minY, this.cameraY));
         },
     },
+    watch: {
+        'mapData.name': {
+            handler: function (val, oldVal) {
+                this.centerCamera();
+            }
+        }
+    }
 };
 </script>
 
