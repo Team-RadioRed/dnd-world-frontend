@@ -1,5 +1,6 @@
 <script>
 import DTCharacter from './DTCharacter.vue';
+import DTImage from './DTImage.vue';
 import DTSkills from './DTSkills.vue';
 import DTSmallIcon from './DTSmallIcon.vue';
 import DTStats from './DTStats.vue';
@@ -23,6 +24,8 @@ export default {
             switch (componentType) {
                 case "text":
                     return DTText;
+                case "image":
+                    return DTImage;
                 case "small-icon":
                     return DTSmallIcon;
                 case "character":

@@ -140,6 +140,13 @@
   line-height: 1.3;
 }
 
+/* Image */
+.dt-image {
+  padding: 5px;
+  width: calc(100% - 10px);
+  height: auto;
+}
+
 /* Small icon */
 .dt-small-icon-container {
   display: flex;

@@ -31,7 +31,6 @@ export default {
         },
         isDeathStyle(state) {
             const value = state === true || state === "true" ? "filter: grayscale(100%);" : "";
-            console.log(value);
             return value;
         }
     },
