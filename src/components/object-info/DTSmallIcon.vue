@@ -1,6 +1,6 @@
 <script>
 import SDTContainer from './SDTContainer.vue';
-import { getImageServer, getImageInAssets } from '@/assets/scripts/images';
+import { getImageServer, getImageLocal } from '@/assets/scripts/images';
 
 export default {
     data() {
@@ -19,7 +19,7 @@ export default {
     },
     methods: {
         getImageServer,
-        getImageInAssets,
+        getImageLocal,
         updateCharacter() {
             this.objectArray = [];
             this.data.description.forEach((id) => {
@@ -60,7 +60,7 @@ export default {
                 <div class="dt-small-icon-img">
                     <img :src="getImageServer(item.img, this.$route.params.project)"
                         :style="isDeathStyle(item.isDeath)" />
-                    <img v-if="item.isDeath" :src="getImageInAssets('../skull.png')" class="dt-character-death-img">
+                    <img v-if="item.isDeath" :src="getImageLocal('png/skull.png')" class="dt-character-death-img">
                 </div>
             </div>
         </div>
