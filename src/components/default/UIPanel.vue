@@ -82,7 +82,7 @@ export default {
     <div class="left-panel">
         <!-- Filter -->
         <UIButton :click-method="toggleVisible" v-if="checkFilters">
-            <SVGLiner svgPath="svg/tag.svg" class="left-button" />
+            <SVGLiner svgPath="svg/point001.svg" class="left-button" />
         </UIButton>
 
         <!-- Buttons -->
