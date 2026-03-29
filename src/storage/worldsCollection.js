@@ -12,7 +12,6 @@ const worldsCollection = {
       return state.worlds;
     },
     WORLD: (state) => (name) => {
-      console.log(name, state.worlds[name]);
       return state.worlds[name]?.main;
     },
     FILTER_VALUE: (state) => (project, name) => {
@@ -63,6 +62,13 @@ const worldsCollection = {
           value: data["main"].filters,
         }
         context.commit("FILTERS", filterData);
+
+        // TODO: тоже что и для фильтров
+        
+        // Обновление слоёв
+        data["main"].layers.forEach((layer) => {
+          layer.state = layer.defaulState;
+        })
 
         // Сохранение данных о мире
         const worldData = {

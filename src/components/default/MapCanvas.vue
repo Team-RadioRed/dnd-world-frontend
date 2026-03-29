@@ -61,9 +61,16 @@ export default {
 
         tileSrc(tile) {
             return getImageServer(
-                `map/r-${tile.y}_c-${tile.x}.jpg`, 
+                `map/${this.mapData.name}/r-${tile.y}_c-${tile.x}.jpg`, 
                 this.$route.params.project
             );
+        },
+
+        layerSrc(tile, layerName) {
+            return getImageServer(
+                `map/${this.mapData.name}/${layerName}/r-${tile.y}_c-${tile.x}.png`, 
+                this.$route.params.project
+            )
         },
 
         tileStyle(tile) {
@@ -224,10 +231,21 @@ export default {
         @touchmove.prevent="handleDrag" @mouseup="endDrag" @touchend="endDrag" @mouseleave="endDrag"
         @wheel.prevent="handleZoom">
         <div class="map-controll" :style="containerStyle">
+            <!-- Main map -->
             <div class="tiles-container">
                 <img v-for="tile in visibleTiles" :key="`${tile.x}-${tile.y}`" class="tile" :src="tileSrc(tile)"
                     :style="tileStyle(tile)" alt="" draggable="false" loading="lazy" decoding="async" />
             </div>
+            <!-- Layers -->
+            <div v-if="mapData != null">
+                <div v-for="(value, index) in mapData.layers" :key="index">
+                    <div class="tiles-container" v-if="value.state">
+                        <img v-for="tile in visibleTiles" :key="`${tile.x}-${tile.y}`" class="tile" :src="layerSrc(tile, value.name)"
+                            :style="tileStyle(tile)" alt="" draggable="false" loading="lazy" decoding="async" />
+                    </div>
+                </div>
+            </div>
+            <!-- Points -->
             <slot></slot>
         </div>
     </div>
