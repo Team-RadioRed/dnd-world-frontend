@@ -25,7 +25,7 @@ export default {
         </div>
 
         <div class="home-page-url-container">
-            <LinkComponent v-for="(world, index) in worlds" :key="index" :index="index" :data="world" />
+            <LinkComponent v-for="(world, index) in worlds" :key="index" :index="index" :data="world.main" />
         </div>
     </div>
 </template>

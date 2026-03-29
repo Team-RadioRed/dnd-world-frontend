@@ -60,7 +60,10 @@ export default {
         },
 
         tileSrc(tile) {
-            return getImageServer(`map/r-${tile.y}_c-${tile.x}.jpg`, this.mapData.name);
+            return getImageServer(
+                `map/r-${tile.y}_c-${tile.x}.jpg`, 
+                this.$route.params.project
+            );
         },
 
         tileStyle(tile) {
