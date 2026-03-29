@@ -110,7 +110,8 @@
 }
 .tile {
   position: absolute;
-  background-size: cover;
+  display: block;
+  object-fit: cover;
   image-rendering: crisp-edges;
   pointer-events: none;
 }

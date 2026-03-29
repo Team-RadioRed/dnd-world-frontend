@@ -9,7 +9,6 @@ export default {
             cameraX: 0,
             cameraY: 0,
             isDragging: false,
-            hasMoved: false,
             dragStartX: 0,
             dragStartY: 0,
             initialCameraX: 0,
@@ -30,7 +29,7 @@ export default {
         visibleTiles() {
             const tiles = [];
             const viewport = this.calculateViewport();
-            if (!viewport) return;
+            if (!viewport) return [];
 
             for (let x = viewport.startCol; x <= viewport.endCol; x++) {
                 for (let y = viewport.startRow; y <= viewport.endRow; y++) {
@@ -60,23 +59,25 @@ export default {
             this.cameraY = this.cameraY + this.padding;
         },
 
+        tileSrc(tile) {
+            return getImageServer(`map/r-${tile.y}_c-${tile.x}.jpg`, this.mapData.name);
+        },
+
         tileStyle(tile) {
-            const imageURL = getImageServer(`map/r-${tile.y}_c-${tile.x}.jpg`, this.mapData.name);
             const tileSize = this.mapData.params.tileSize;
 
             return {
                 width: `${tileSize}px`,
                 height: `${tileSize}px`,
                 transform: `translate(${tile.x * tileSize}px, ${tile.y * tileSize}px)`,
-                backgroundImage: `url(${imageURL})`,
             };
         },
 
         calculateViewport() {
             if (!this.mapData) return;
             const scaledTileSize = this.mapData.params.tileSize * this.scale;
-            const containerWidth = window.screen.availWidth;
-            const containerHeight = window.screen.availHeight;
+            const containerWidth = this.$el?.clientWidth ?? document.documentElement.clientWidth;
+            const containerHeight = this.$el?.clientHeight ?? document.documentElement.clientHeight;
 
             return {
                 startCol: Math.floor((-this.cameraX - containerWidth) / scaledTileSize),
@@ -100,7 +101,6 @@ export default {
 
         handleDragStart(event) {
             this.isDragging = true;
-            this.hasMoved = false;
             this.dragStartX = event.clientX;
             this.dragStartY = event.clientY;
             this.initialCameraX = this.cameraX;
@@ -119,10 +119,6 @@ export default {
             const dx = event.clientX - this.dragStartX;
             const dy = event.clientY - this.dragStartY;
 
-            if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
-                this.hasMoved = true;
-            }
-
             this.cameraX = this.initialCameraX + dx;
             this.cameraY = this.initialCameraY + dy;
             this.applyBoundaries();
@@ -131,18 +127,8 @@ export default {
         },
 
         endDrag() {
-            if (this.isDragging && this.hasMoved) {
-                document.addEventListener('click', this.preventClickOnce, true);
-            }
-
             this.isDragging = false;
             this.initialPinchDistance = null;
-        },
-
-        preventClickOnce(e) {
-            e.stopImmediatePropagation();
-            e.preventDefault();
-            document.removeEventListener('click', this.preventClickOnce, true);
         },
 
         handlePinchStart(e) {
@@ -172,7 +158,7 @@ export default {
                 newScale > this.mapData.params.maxScale
             ) return;
 
-            const rect = e.target.getBoundingClientRect();
+            const rect = this.$el.getBoundingClientRect();
             const centerX = (t1.clientX + t2.clientX) / 2 - rect.left;
             const centerY = (t1.clientY + t2.clientY) / 2 - rect.top;
 
@@ -189,7 +175,7 @@ export default {
 
             if (newScale < this.mapData.params.minScale || newScale > this.mapData.params.maxScale) return;
 
-            const rect = e.target.getBoundingClientRect();
+            const rect = this.$el.getBoundingClientRect();
             const mouseX = e.clientX - rect.left;
             const mouseY = e.clientY - rect.top;
 
@@ -236,8 +222,8 @@ export default {
         @wheel.prevent="handleZoom">
         <div class="map-controll" :style="containerStyle">
             <div class="tiles-container">
-                <div v-for="tile in visibleTiles" :key="`${tile.x}-${tile.y}`" class="tile" :style="tileStyle(tile)">
-                </div>
+                <img v-for="tile in visibleTiles" :key="`${tile.x}-${tile.y}`" class="tile" :src="tileSrc(tile)"
+                    :style="tileStyle(tile)" alt="" draggable="false" loading="lazy" decoding="async" />
             </div>
             <slot></slot>
         </div>
