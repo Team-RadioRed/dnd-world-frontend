@@ -60,6 +60,75 @@
   }
 }
 
+/* Layer */
+.layer-panel {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  left: 130px;
+  width: 120px;
+  top: 10px;
+  z-index: 300;
+  padding: 5px;
+  background-color: var(--black);
+}
+@media (max-width: 1100px) {
+  .layer-panel {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    left: 10px;
+    width: 120px;
+    top: 10px;
+    z-index: 300;
+    padding: 5px;
+  background-color: var(--black);
+  }
+}
+
+.layer-panel-btn-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.layer-panel-main-btn {
+  width: calc(100% - 10px);
+  background-color: var(--color);
+  color: var(--white);
+  transition: 0.5s;
+  padding: 5px;
+  user-select: none; 
+}
+
+.layer-panel-main-btn:hover {
+  background-color: var(--color-2up);
+  cursor: pointer;
+}
+
+.layer-panel-btn {
+  width: calc(100% - 10px);
+  padding: 5px;
+  color: var(--white);
+  background-color: var(--black);
+  transition: 0.5s;
+  user-select: none; 
+}
+
+.layer-panel-btn:hover {
+  background-color: var(--color);
+  cursor: pointer;
+}
+
+.layer-panel-btn-active {
+  background-color: var(--color);
+}
+.layer-panel-btn-active:hover {
+  background-color: var(--color-2up);
+}
+
 /* Filter */
 .filter-panel {
   position: fixed;
@@ -110,7 +179,8 @@
 }
 .tile {
   position: absolute;
-  background-size: cover;
+  display: block;
+  object-fit: cover;
   image-rendering: crisp-edges;
   pointer-events: none;
 }

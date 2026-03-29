@@ -2,18 +2,21 @@
 import SVGLiner from "./SVGLiner.vue";
 import UIButton from "@/components/default/UIButton.vue";
 import UIToggleButton from "@/components/default/UIToggleButton.vue";
+import UILayerButton from "@/components/default/UILayerButton.vue";
 import { getImageServer } from "@/assets/scripts/images";
 
 export default {
     data() {
         return {
             isShowFilter: false,
+            isShowLayer: false
         }
     },
     components: {
         SVGLiner,
         UIButton,
-        UIToggleButton
+        UIToggleButton,
+        UILayerButton
     },
     computed: {
         worldParams() {
@@ -25,6 +28,11 @@ export default {
     },
     methods: {
         getImageServer,
+        checkLayers() {
+            if (!this.worldParams) return false;
+            if (this.worldParams.layers?.length === 0) return false;
+            return true
+        },
         checkFilters() {
             if (!this.worldParams) return false;
             if (this.worldParams.filters.length === 0) return false;
@@ -41,6 +49,10 @@ export default {
                 name: name,
                 value: !filter.state
             });
+        },
+        toggleLayer(name) {
+            const layer = this.worldParams.layers.find((layer) => layer.name === name);
+            layer.state = !layer.state;
         },
         showPanel(name) {
             const template = this.worldParams.bottomPanel.find(params => params.name === name);
@@ -72,6 +84,18 @@ export default {
 
 
 <template>
+    <div class="layer-panel" v-if="checkLayers()">
+        <div @click="isShowLayer = !isShowLayer" class="layer-panel-main-btn">
+            Слои
+        </div>
+        <div v-if="isShowLayer" class="layer-panel-btn-container">
+            <UILayerButton v-for="(value, index) in worldParams.layers" :key="index"
+                :data="value"
+                :click-method="toggleLayer"
+            />
+        </div>
+    </div>
+
     <div v-if="isShowFilter" class="filter-panel">
         <UIToggleButton v-for="(value, index) in worldParams.filters" :key="index" :is-active="getState(value.name)"
             :name-filter="value.name" :click-method="toggleFilter">

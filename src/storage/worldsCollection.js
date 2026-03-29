@@ -3,7 +3,7 @@ import { requestAxios } from "@/assets/scripts/api";
 const worldsCollection = {
   state: () => ({
     // Общая информация по всем мирам
-    worlds: [],
+    worlds: {},
     // Фильтры мира по отображению
     filters: {},
   }),
@@ -12,7 +12,7 @@ const worldsCollection = {
       return state.worlds;
     },
     WORLD: (state) => (name) => {
-      return state.worlds.find((world) => world.name === name);
+      return state.worlds[name]?.main;
     },
     FILTER_VALUE: (state) => (project, name) => {
       return state.filters[project].find((filter) => filter.name === name);
@@ -24,6 +24,9 @@ const worldsCollection = {
   mutations: {
     WORLDS(state, value) {
       state.worlds = value;
+    },
+    WORLD_ADD(state, { project, value }) {
+      state.worlds[project] = value;
     },
     FILTERS(state, { project, value }) {
       state.filters[project] = value;
@@ -37,25 +40,43 @@ const worldsCollection = {
     async LOAD_WORLDS(context) {
       // Проверка есть ли данные в хранилище
       const worlds = context.getters.WORLDS;
-      if (worlds.length !== 0) return;
+      if (Object.keys(worlds).length !== 0) return;
 
       // Запрос данных
       const newData = await requestAxios("/api/worlds");
-      // Сохранение фильтров
-      newData.forEach((data) => {
-        if (!data.filters) return;
-        // Добавляем базовое значение
-        data.filters.forEach((filter) => {
+
+      // Обработка данных
+      Object.entries(newData).forEach(([worldName, data]) => {
+        // TODO: В целом переделать систему фильтров, чтобы не 
+        //   надо было обрабатывать на стороне фронта, а не на сервере
+        // TODO: Вынести в базу значнеи по умолчанию для фильтров
+
+        // Добавляем статус фильтра. Как включенный по умолчанию
+        data["main"].filters.forEach((filter) => {
           filter.state = true;
         });
-        // Сохранение
-        context.commit("FILTERS", {
-          project: data.name,
-          value: data.filters,
-        });
+
+        // Сохранение фильтров
+        const filterData = {
+          project: worldName,
+          value: data["main"].filters,
+        }
+        context.commit("FILTERS", filterData);
+
+        // TODO: тоже что и для фильтров
+        
+        // Обновление слоёв
+        data["main"].layers.forEach((layer) => {
+          layer.state = layer.defaulState;
+        })
+
+        // Сохранение данных о мире
+        const worldData = {
+          project: worldName,
+          value: data,
+        }
+        context.commit("WORLD_ADD", worldData);
       });
-      // Сохранение данных в хранилище
-      context.commit("WORLDS", newData);
     },
   },
 };
