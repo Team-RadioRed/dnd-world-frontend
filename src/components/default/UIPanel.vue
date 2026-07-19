@@ -63,7 +63,7 @@ export default {
                 description.push({
                     name: value.name,
                     type: "small-icon",
-                    description: this.$store.getters.CHARACTERS(this.$route.params.project, value.tag),
+                    description: this.$store.getters.CHARACTER_BY_TAG(this.$route.params.project, value.tag),
                     isHideName: value.isHideName === true ? true : false
                 });
             });

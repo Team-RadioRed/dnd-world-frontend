@@ -7,24 +7,31 @@ const worldsData = {
   }),
   getters: {
     MAP_OBJECT: (state) => (project) => {
-      if (state.mapObject[project] == null) return {};
-      return state.mapObject[project];
+      const data = state.mapObject[project];
+      
+      if (data == null) return {};
+      return data;
     },
-    MAP_OBJECT_BY_TYPE: (state) => (project, type) => {
-
-    },
-    MAP_OBJECT_BY_NAME: (state) => (project, id) => {
+    MAP_OBJECT_BY_ID: (state) => (project, id) => {
       return state.mapObject[project][id];
     },
     CHARACTER: (state) => (project) => {
-      if (state.character[project] == null) return {};
-      return  state.character[project];
+      const data = state.character[project];
+
+      if (data == null) return {};
+      return data;
     },
-    CHARACTER_BY_TAG: (state) => (project, section) => {
-      
+    CHARACTER_BY_TAG: (state) => (project, tag) => {
+      const data = state.character[project];
+      return Object.entries(data)
+        .filter(([key, value]) => value.group === tag)
+        .map(([key, value]) => key);
     },
-    CHARACTER_BY_NAME: (state) => (project, id) => {
-      return state.character[project][id];
+    CHARACTER_BY_ID: (state) => (project, id) => {
+      const data = state.character[project][id];
+
+      if (data == null) return {};
+      return data;
     }
   },
   mutations: {
