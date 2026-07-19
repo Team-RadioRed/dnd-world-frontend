@@ -11,7 +11,7 @@ export default {
         worlds() { return this.$store.getters.WORLDS },
     },
     async mounted() {
-        await this.$store.dispatch("LOAD_WORLDS");
+        await this.$store.dispatch("LOAD_WORLD");
     }
 }
 </script>

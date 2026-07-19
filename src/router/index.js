@@ -11,7 +11,7 @@ const routes = [
   },
   {
     name: "map",
-    path: "/map/:project",
+    path: "/map/:project/:map",
     component: MapPage,
   },
 ];

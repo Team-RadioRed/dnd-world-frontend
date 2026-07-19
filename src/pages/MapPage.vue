@@ -12,39 +12,39 @@ export default {
         UIPanel
     },
     computed: {
-        // Точки интереса на карте
         mapObjects() {
-            const mapObjects = this.$store.getters.MAP_OBJECTS(this.$route.params.project);
+            const projectName = this.$route.params.project;
+            const mapName = this.$route.params.map
 
-            // Проверка что данные есть
-            if (!mapObjects) return [];
-            if (Object.keys(mapObjects).length === 0) return [];
+            const mapObject = this.$store.getters.MAP_OBJECT(projectName);
 
             // Получение данных для отображения по фильтрам
             let objectArray = [];
-            Object.keys(mapObjects).forEach((name) => {
-                const filter = this.$store.getters.FILTER_VALUE(this.$route.params.project, name);
+            Object.values(mapObject).forEach((data) => {
+                // Проверка, что точку надо отображать на этой карте
+                if (data.target == null) return;
+                if (!data.target.includes(mapName)) return;
 
-                if (filter) {
-                    if (filter.state) {
-                        objectArray = objectArray.concat(mapObjects[name]);
-                    }
-                }
-                else {
-                    objectArray = objectArray.concat(mapObjects[name]);
-                }
+                // Проверка на фильтрацию
+                if (data.type == null) return;
+                const filter = this.$store.getters.FILTER_VALUE(projectName, data.type);
+                if (!filter) return;
+
+                // Добавление, если все проверки пройдены
+                if (filter.state) objectArray = objectArray.concat(data);
             });
 
             return objectArray;
         },
     },
     async mounted() {
+        const projectName = this.$route.params.project;
+
         // Получение параметров всех миров
-        await this.$store.dispatch("LOAD_WORLDS");
+        await this.$store.dispatch("LOAD_WORLD");
         // Получение данных мира
-        await this.$store.dispatch("LOAD_CHARACTERS", this.$route.params.project);
-        await this.$store.dispatch("LOAD_MAP_OBJECTS", this.$route.params.project);
-        await this.$store.dispatch("LOAD_ADDITIONAL_PAGE", this.$route.params.project);
+        await this.$store.dispatch("LOAD_CHARACTER", projectName);
+        await this.$store.dispatch("LOAD_MAP_OBJECT", projectName);
     }
 }
 </script>

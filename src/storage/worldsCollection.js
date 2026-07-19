@@ -37,7 +37,7 @@ const worldsCollection = {
     },
   },
   actions: {
-    async LOAD_WORLDS(context) {
+    async LOAD_WORLD(context) {
       // Проверка есть ли данные в хранилище
       const worlds = context.getters.WORLDS;
       if (Object.keys(worlds).length !== 0) return;
