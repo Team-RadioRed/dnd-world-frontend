@@ -2,119 +2,84 @@ import { requestAxios } from "@/assets/scripts/api";
 
 const worldsData = {
   state: () => ({
-    characters: {},
-    mapObject: {},
-    charactersDictionary: {},
-    subPage: {},
+    character: {},
+    mapObject: {}
   }),
   getters: {
-    MAP_OBJECTS: (state) => (project) => {
-      return state.mapObject[project];
+    MAP_OBJECT: (state) => (project) => {
+      const data = state.mapObject[project];
+      
+      if (data == null) return {};
+      return data;
     },
-    CHARACTERS_ALL: (state) => (project) => {
-      return state.characters[project];
+    MAP_OBJECT_BY_ID: (state) => (project, id) => {
+      return state.mapObject[project][id];
     },
-    CHARACTERS: (state) => (project, section) => {
-      return state.characters[project][section];
+    CHARACTER: (state) => (project) => {
+      const data = state.character[project];
+
+      if (data == null) return {};
+      return data;
     },
-    CHARACTER_BY_NAME: (state) => (project, id) => {
-      return state.charactersDictionary[project][id];
+    CHARACTER_BY_TAG: (state) => (project, tag) => {
+      const data = state.character[project];
+      return Object.entries(data)
+        .filter(([key, value]) => value.group === tag)
+        .map(([key, value]) => key);
     },
-    SUB_PAGE: (state) => (project) => {
-      return state.subPage[project];
-    },
-    SUB_PAGE_BY_NAME: (state) => (project, id) => {
-      return state.subPage[project][id];
-    },
+    CHARACTER_BY_ID: (state) => (project, id) => {
+      const data = state.character[project][id];
+
+      if (data == null) return {};
+      return data;
+    }
   },
   mutations: {
-    MAP_OBJECTS(state, { project, value }) {
+    MAP_OBJECT(state, { project, value }) {
       state.mapObject[project] = value;
     },
-    CHARACTERS(state, { project, value }) {
-      state.characters[project] = value;
-    },
-    CHARACTERS_STATE(state, { project, section, value }) {
-      state.characters[project][section] = value;
-    },
-    CHARACTERS_DICTIONARY(state, { project, value }) {
-      state.charactersDictionary[project] = value;
-    },
-    SUB_PAGE(state, { project, value }) {
-      state.subPage[project] = value;
-    },
+    CHARACTER(state, { project, value }) {
+      state.character[project] = value;
+    }
   },
   actions: {
-    async LOAD_MAP_OBJECTS(context, project) {
-      const mapObject = context.getters.MAP_OBJECTS(project);
-      if (mapObject) return;
+    async LOAD_MAP_OBJECT(context, project) {
+      const mapObject = context.getters.MAP_OBJECT(project);
+      if (Object.keys(mapObject).length !== 0) return;
 
       const newMapObject = await requestAxios("/api/mapObject", {
         project: project,
       });
-      const mapObjectCollection = {};
-      newMapObject.forEach((object, index) => {
-        if (mapObjectCollection[object["type"]] == null) {
-          mapObjectCollection[object["type"]] = [];
-        }
-        mapObjectCollection[object["type"]].push(object);
-      });
-
-      context.commit("MAP_OBJECTS", {
+      const mapObjectDictionary = convertToDictionary(newMapObject);
+      context.commit("MAP_OBJECT", {
         project: project,
-        value: mapObjectCollection,
+        value: mapObjectDictionary,
       });
     },
-    async LOAD_CHARACTERS(context, project) {
-      const characters = context.getters.CHARACTERS_ALL(project);
-      if (characters) return;
+    async LOAD_CHARACTER(context, project) {
+      const characters = context.getters.CHARACTER(project);
+      if (Object.keys(characters).length !== 0) return;
 
       const newCharacters = await requestAxios("/api/character", {
         project: project,
       });
-      const charactersObject = {};
-      const charactersDictionary = {};
-
-      newCharacters.forEach((character) => {
-        // Добавление персонажа в словарь
-        charactersDictionary[character["_id"]] = character;
-
-        // Добавление персонажа в группу
-        if (character["group"] == null) return;
-
-        if (charactersObject[character["group"]] == null)
-          charactersObject[character["group"]] = [];
-        charactersObject[character["group"]].push(character["_id"]);
-      });
-
-      context.commit("CHARACTERS", {
+      const characterDictionary = convertToDictionary(newCharacters);
+      context.commit("CHARACTER", {
         project: project,
-        value: charactersObject,
+        value: characterDictionary,
       });
-      context.commit("CHARACTERS_DICTIONARY", {
-        project: project,
-        value: charactersDictionary,
-      });
-    },
-    async LOAD_ADDITIONAL_PAGE(context, project) {
-      const subPage = context.getters.SUB_PAGE(project);
-      if (subPage) return;
-
-      const newSubPage = await requestAxios("/api/subPage", {
-        project: project,
-      });
-      const subPageObject = {};
-
-      newSubPage.forEach((page) => {
-        subPageObject[page["_id"]] = page;
-      });
-
-      context.commit("SUB_PAGE", {
-        project: project,
-        value: subPageObject,
-      });
-    },
+    }
   },
 };
 
 export default worldsData;
+
+function convertToDictionary(data) {
+  const dictionary = {};
+  data.forEach((object) => {
+    const id = object["_id"];
+    delete object["_id"];
+    dictionary[id] = object;
+  });
+  return dictionary;
+}

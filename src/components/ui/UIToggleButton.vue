@@ -10,7 +10,7 @@ export default {
 
 
 <template>
-    <button @click="clickMethod(nameFilter)" :class="isActive ? 'left-button' : 'left-button left-button-disable'">
+    <button @click="clickMethod(nameFilter)" :class="isActive ? 'toggle-button' : 'toggle-button toggle-button-disable'">
         <slot></slot>
     </button>
 </template>

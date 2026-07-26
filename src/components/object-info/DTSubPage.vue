@@ -25,7 +25,7 @@ export default {
 
         this.objectArray = [];
         this.data.description.forEach((id) => {
-            this.objectArray.push(this.$store.getters.SUB_PAGE_BY_NAME(this.$route.params.project, id));
+            this.objectArray.push(this.$store.getters.MAP_OBJECT_BY_ID(this.$route.params.project, id));
         });
     },
 }

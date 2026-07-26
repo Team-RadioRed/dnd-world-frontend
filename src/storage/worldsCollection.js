@@ -1,84 +1,146 @@
 import { requestAxios } from "@/assets/scripts/api";
+import { toRaw } from "vue";
 
 const worldsCollection = {
   state: () => ({
-    // Общая информация по всем мирам
-    worlds: {},
-    // Фильтры мира по отображению
-    filters: {},
+    world: {},
+    currentWorlData: {},
   }),
   getters: {
-    WORLDS(state) {
-      return state.worlds;
+    WORLD(state) {
+      const data = state.world;
+
+      if (data == null) return {};
+      return data;
     },
-    WORLD: (state) => (name) => {
-      return state.worlds[name]?.main;
+    WORLD_BY_PROJECT: state => (project) => {
+      const dataProject = state.world[project]
+
+      if (dataProject == null) return {};
+
+      return dataProject;
     },
-    FILTER_VALUE: (state) => (project, name) => {
-      return state.filters[project].find((filter) => filter.name === name);
+    WORLD_BY_NAME: (state) => (project, name) => {
+      const dataProject = state.world[project]
+
+      if (dataProject == null) return {};
+
+      const data = dataProject[name];
+
+      if (data == null) return {};
+      return data;
     },
-    FILTERS: (state) => (project) => {
-      return state.filters[project] ? state.filters[project] : [];
-    },
+    WORLD_CONFIG(state) {
+      return state.currentWorlData;
+    }
   },
   mutations: {
-    WORLDS(state, value) {
-      state.worlds = value;
+    WORLD(state, { project, name, value }) {
+      if (state.world[project] == null) state.world[project] = {};
+      state.world[project][name] = value;
     },
-    WORLD_ADD(state, { project, value }) {
-      state.worlds[project] = value;
+    WORLD_CONFIG(state, data) {
+      state.currentWorlData = data;
     },
-    FILTERS(state, { project, value }) {
-      state.filters[project] = value;
-    },
-    FILTER_STATE(state, { project, name, value }) {
-      state.filters[project].find((filter) => filter.name === name).state =
-        value;
-    },
+    WORLD_CONFIG_STATE(state, {key, name, value}) {
+      if (state.currentWorlData[key] == null) return;
+
+      const property = name == null ? 
+        state.currentWorlData[key] : 
+        state.currentWorlData[key][name];
+      if (property == null) return;
+      if (property.state == null) return;
+
+      property.state = value;
+    }
   },
   actions: {
-    async LOAD_WORLDS(context) {
+    async LOAD_WORLD(context) {
       // Проверка есть ли данные в хранилище
-      const worlds = context.getters.WORLDS;
-      if (Object.keys(worlds).length !== 0) return;
+      const world = context.getters.WORLD;
+      if (Object.keys(world).length !== 0) return;
 
       // Запрос данных
-      const newData = await requestAxios("/api/worlds");
+      const newWorld = await requestAxios("/api/worlds");
 
-      // Обработка данных
-      Object.entries(newData).forEach(([worldName, data]) => {
-        // TODO: В целом переделать систему фильтров, чтобы не 
-        //   надо было обрабатывать на стороне фронта, а не на сервере
-        // TODO: Вынести в базу значнеи по умолчанию для фильтров
+      Object.entries(newWorld).forEach(([projectName, projectValue]) => {
+        Object.entries(projectValue).forEach(([worldName, worldValue]) => {
+          // Удаление лишних полей
+          delete worldValue.name;
+          delete worldValue["_id"];
 
-        // Добавляем статус фильтра. Как включенный по умолчанию
-        data["main"].filters.forEach((filter) => {
-          filter.state = true;
+          // Сохранение данных о мире
+          const worldData = {
+            project: projectName,
+            name: worldName,
+            value: worldValue,
+          }
+          context.commit("WORLD", worldData);
         });
-
-        // Сохранение фильтров
-        const filterData = {
-          project: worldName,
-          value: data["main"].filters,
-        }
-        context.commit("FILTERS", filterData);
-
-        // TODO: тоже что и для фильтров
-        
-        // Обновление слоёв
-        data["main"].layers.forEach((layer) => {
-          layer.state = layer.defaulState;
-        })
-
-        // Сохранение данных о мире
-        const worldData = {
-          project: worldName,
-          value: data,
-        }
-        context.commit("WORLD_ADD", worldData);
       });
     },
-  },
+    async LOAD_WORLD_DATA(context, { project, name }) {
+      const worldData = context.getters.WORLD_BY_NAME(project, name);
+
+      const worldConfig = {};
+
+      // Filter
+      worldConfig.filter = {};
+      worldData.filters.forEach((data) => {
+        const rawFilter = toRaw(data);
+        const filterData = structuredClone(rawFilter);
+
+        filterData.state = filterData.defaulState ?? false;
+        delete filterData.name;
+        delete filterData.defaulState;
+
+        worldConfig.filter[data.name] = filterData;
+      });
+
+      // Group
+      worldConfig.group = {};
+      worldData.bottomPanel.forEach((data) => {
+        const rawPanel = toRaw(data);
+        const panelData = structuredClone(rawPanel);
+
+        delete panelData.name;
+
+        worldConfig.group[data.name] = panelData;
+      });
+      
+      // Layer
+      worldConfig.layer = {};
+      worldData.layers.forEach((data) => {
+        const rawLayer = toRaw(data);
+        const layerData = structuredClone(rawLayer);
+
+        layerData.state = layerData.defaulState ?? false;
+        delete layerData.name;
+        delete layerData.defaulState;
+
+        worldConfig.layer[data.name] = layerData;
+      });
+
+      // Params
+      const rawParams = toRaw(worldData.params);
+      const paramsData = structuredClone(rawParams);
+      worldConfig.params = paramsData;
+
+      // World
+      const otherWorlds = context.getters.WORLD_BY_PROJECT(project);
+      worldConfig.world = {}
+      Object.entries(otherWorlds).forEach(([worldName, data]) => {
+        if (worldName === name) return;
+
+        worldConfig.world[worldName] = {
+          displayName: data.title
+        };
+      });
+
+      console.log("worldConfig", worldConfig);
+      context.commit("WORLD_CONFIG", worldConfig);
+    }
+  }
 };
 
 export default worldsCollection;

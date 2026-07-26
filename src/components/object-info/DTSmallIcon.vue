@@ -23,7 +23,7 @@ export default {
         updateCharacter() {
             this.objectArray = [];
             this.data.description.forEach((id) => {
-                this.objectArray.push(this.$store.getters.CHARACTER_BY_NAME(this.$route.params.project, id));
+                this.objectArray.push(this.$store.getters.CHARACTER_BY_ID(this.$route.params.project, id));
             });
         },
         openChild(objectInfo) {

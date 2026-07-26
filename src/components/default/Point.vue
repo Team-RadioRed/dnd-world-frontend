@@ -1,9 +1,9 @@
 <script>
-import { DEFAULT_POINT_COLOR } from '@/storage/constants';
 
 export default {
     props: {
-        data: Object
+        data: Object,
+        color: String
     },
     computed: {
         getPosition() {
@@ -13,11 +13,7 @@ export default {
         },
         openObject() {
             this.$store.dispatch("OPEN_OBJECT", this.data);
-        },
-        color() {
-            const filter = this.$store.getters.FILTER_VALUE(this.$route.params.project, this.data.type);
-            return filter.color ? filter.color : DEFAULT_POINT_COLOR;
-        },
+        }
     }
 }
 </script>
