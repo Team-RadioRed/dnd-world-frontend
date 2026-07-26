@@ -20,7 +20,11 @@ export default {
         }
     },
     computed: {
-        mapData() { return this.$store.getters.WORLD(this.$route.params.project) },
+        mapConfig() { 
+            const data = this.$store.getters.WORLD_CONFIG;
+            if (Object.keys(data).length === 0) return null;
+            return data;
+        },
         containerStyle() {
             return {
                 transform: `translate(${this.cameraX}px, ${this.cameraY}px) scale(${this.scale})`,
@@ -33,7 +37,12 @@ export default {
 
             for (let x = viewport.startCol; x <= viewport.endCol; x++) {
                 for (let y = viewport.startRow; y <= viewport.endRow; y++) {
-                    if (x >= 0 && y >= 0 && x < this.mapData.params.cols && y < this.mapData.params.rows) {
+                    if (
+                        x >= 0 && 
+                        y >= 0 && 
+                        x < this.mapConfig.params.cols && 
+                        y < this.mapConfig.params.rows
+                    ) {
                         tiles.push({ x, y });
                     }
                 }
@@ -42,39 +51,22 @@ export default {
         }
     },
     methods: {
-        centerCamera() {
-            const tileSize = this.mapData.params.tileSize;
-            const scale = this.scale;
-
-            const mapWidth = this.mapData.params.cols * tileSize * scale;
-            const mapHeight = this.mapData.params.rows * tileSize * scale;
-
-            const containerWidth = this.$el.clientWidth;
-            const containerHeight = this.$el.clientHeight;
-
-            this.cameraX = (containerWidth - mapWidth) / 2;
-            this.cameraY = (containerHeight - mapHeight) / 2;
-
-            this.cameraX = this.cameraX + this.padding;
-            this.cameraY = this.cameraY + this.padding;
-        },
-
         tileSrc(tile) {
             return getImageServer(
-                `map/${this.mapData.name}/r-${tile.y}_c-${tile.x}.jpg`, 
+                `map/${this.$route.params.map}/r-${tile.y}_c-${tile.x}.jpg`, 
                 this.$route.params.project
             );
         },
 
         layerSrc(tile, layerName) {
             return getImageServer(
-                `map/${this.mapData.name}/${layerName}/r-${tile.y}_c-${tile.x}.png`, 
+                `map/${this.$route.params.map}/${layerName}/r-${tile.y}_c-${tile.x}.png`, 
                 this.$route.params.project
             )
         },
 
         tileStyle(tile) {
-            const tileSize = this.mapData.params.tileSize;
+            const tileSize = this.mapConfig.params.tileSize;
 
             return {
                 width: `${tileSize}px`,
@@ -84,8 +76,7 @@ export default {
         },
 
         calculateViewport() {
-            if (!this.mapData) return;
-            const scaledTileSize = this.mapData.params.tileSize * this.scale;
+            const scaledTileSize = this.mapConfig.params.tileSize * this.scale;
             const containerWidth = this.$el?.clientWidth ?? document.documentElement.clientWidth;
             const containerHeight = this.$el?.clientHeight ?? document.documentElement.clientHeight;
 
@@ -164,8 +155,8 @@ export default {
             const newScale = this.initialScale * scaleDelta;
 
             if (
-                newScale < this.mapData.params.minScale ||
-                newScale > this.mapData.params.maxScale
+                newScale < this.mapConfig.params.minScale ||
+                newScale > this.mapConfig.params.maxScale
             ) return;
 
             const rect = this.$el.getBoundingClientRect();
@@ -183,7 +174,7 @@ export default {
             const delta = e.deltaY > 0 ? 0.9 : 1.1;
             const newScale = this.scale * delta;
 
-            if (newScale < this.mapData.params.minScale || newScale > this.mapData.params.maxScale) return;
+            if (newScale < this.mapConfig.params.minScale || newScale > this.mapConfig.params.maxScale) return;
 
             const rect = this.$el.getBoundingClientRect();
             const mouseX = e.clientX - rect.left;
@@ -197,10 +188,10 @@ export default {
         },
 
         applyBoundaries() {
-            const tileSize = this.mapData.params.tileSize;
+            const tileSize = this.mapConfig.params.tileSize;
 
-            const scaledMapWidth = this.mapData.params.cols * tileSize * this.scale;
-            const scaledMapHeight = this.mapData.params.rows * tileSize * this.scale;
+            const scaledMapWidth = this.mapConfig.params.cols * tileSize * this.scale;
+            const scaledMapHeight = this.mapConfig.params.rows * tileSize * this.scale;
 
             const containerWidth = document.documentElement.clientWidth;
             const containerHeight = document.documentElement.clientHeight;
@@ -214,35 +205,47 @@ export default {
             this.cameraX = Math.min(maxX, Math.max(minX, this.cameraX));
             this.cameraY = Math.min(maxY, Math.max(minY, this.cameraY));
         },
-    },
-    watch: {
-        'mapData.name': {
-            handler: function (val, oldVal) {
-                this.centerCamera();
-            }
-        }
     }
 };
 </script>
 
 
 <template>
-    <div class="map-container" @mousedown="startDrag" @touchstart.prevent="startDrag" @mousemove="handleDrag"
-        @touchmove.prevent="handleDrag" @mouseup="endDrag" @touchend="endDrag" @mouseleave="endDrag"
-        @wheel.prevent="handleZoom">
+    <div 
+        class="map-container" 
+        @mousedown="startDrag" 
+        @touchstart.prevent="startDrag" 
+        @mousemove="handleDrag"
+        @touchmove.prevent="handleDrag" 
+        @mouseup="endDrag" 
+        @touchend="endDrag" 
+        @mouseleave="endDrag"
+        @wheel.prevent="handleZoom"
+        v-if="mapConfig != null"
+    >
         <div class="map-controll" :style="containerStyle">
             <!-- Main map -->
             <div class="tiles-container">
-                <img v-for="tile in visibleTiles" :key="`${tile.x}-${tile.y}`" class="tile" :src="tileSrc(tile)"
-                    :style="tileStyle(tile)" alt="" draggable="false" loading="lazy" decoding="async" />
+                <img 
+                    v-for="tile in visibleTiles" 
+                    :key="`${tile.x}-${tile.y}`" 
+                    class="tile" 
+                    :src="tileSrc(tile)"
+                    :style="tileStyle(tile)" 
+                    alt="" draggable="false" loading="lazy" decoding="async"
+                />
             </div>
             <!-- Layers -->
-            <div v-if="mapData != null">
-                <div v-for="(value, index) in mapData.layers" :key="index">
-                    <div class="tiles-container" v-if="value.state">
-                        <img v-for="tile in visibleTiles" :key="`${tile.x}-${tile.y}`" class="tile" :src="layerSrc(tile, value.name)"
-                            :style="tileStyle(tile)" alt="" draggable="false" loading="lazy" decoding="async" />
-                    </div>
+            <div v-for="(value, index) in mapConfig.layer" :key="index">
+                <div class="tiles-container" v-if="value.state">
+                    <img 
+                        v-for="tile in visibleTiles" 
+                        :key="`${tile.x}-${tile.y}`" 
+                        class="tile" 
+                        :src="layerSrc(tile, index)"
+                        :style="tileStyle(tile)" 
+                        alt="" draggable="false" loading="lazy" decoding="async" 
+                    />
                 </div>
             </div>
             <!-- Points -->

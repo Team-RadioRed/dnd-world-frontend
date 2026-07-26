@@ -8,7 +8,7 @@ export default {
     },
     computed: {
         version() { return VERSION },
-        worlds() { return this.$store.getters.WORLDS },
+        world() { return this.$store.getters.WORLD },
     },
     async mounted() {
         await this.$store.dispatch("LOAD_WORLD");
@@ -25,7 +25,7 @@ export default {
         </div>
 
         <div class="home-page-url-container">
-            <LinkComponent v-for="(world, index) in worlds" :key="index" :index="index" :data="world.main" />
+            <LinkComponent v-for="(worldData, index) in world" :key="index" :index="index" :data="worldData.main" />
         </div>
     </div>
 </template>

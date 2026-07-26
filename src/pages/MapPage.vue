@@ -2,7 +2,7 @@
 import MapCanvas from '@/components/default/MapCanvas.vue';
 import SDTObjectInfo from '@/components/object-info/SDTObjectInfo.vue';
 import PointCanvas from '@/components/default/PointCanvas.vue';
-import UIPanel from '@/components/default/UIPanel.vue';
+import UIPanel from '@/components/ui/UIPanel.vue';
 
 export default {
     components: {
@@ -12,39 +12,53 @@ export default {
         UIPanel
     },
     computed: {
+        mapName() {
+            return this.$route.params.map;
+        },
         mapObjects() {
-            const projectName = this.$route.params.project;
-            const mapName = this.$route.params.map
+            const mapObjects = this.$store.getters.MAP_OBJECT(this.$route.params.project);
+            const mapConfig = this.$store.getters.WORLD_CONFIG;
 
-            const mapObject = this.$store.getters.MAP_OBJECT(projectName);
+            if (!mapConfig || !mapObjects) return [];
 
             // Получение данных для отображения по фильтрам
             let objectArray = [];
-            Object.values(mapObject).forEach((data) => {
+            Object.values(mapObjects).forEach((data) => {
                 // Проверка, что точку надо отображать на этой карте
                 if (data.target == null) return;
-                if (!data.target.includes(mapName)) return;
+                if (!data.target.includes(this.mapName)) return;
 
                 // Проверка на фильтрацию
                 if (data.type == null) return;
-                const filter = this.$store.getters.FILTER_VALUE(projectName, data.type);
-                if (!filter) return;
+                if (mapConfig.filter[data.type] == null) return;
 
                 // Добавление, если все проверки пройдены
-                if (filter.state) objectArray = objectArray.concat(data);
+                if (mapConfig.filter[data.type].state) objectArray.push(data);
             });
-
+            
             return objectArray;
-        },
+        }
     },
     async mounted() {
         const projectName = this.$route.params.project;
 
         // Получение параметров всех миров
         await this.$store.dispatch("LOAD_WORLD");
+        await this.$store.dispatch("LOAD_WORLD_DATA", { 
+            project: projectName, 
+            name: this.mapName
+        });
         // Получение данных мира
         await this.$store.dispatch("LOAD_CHARACTER", projectName);
         await this.$store.dispatch("LOAD_MAP_OBJECT", projectName);
+    },
+    watch: {
+        '$route.params.map'(newName) {
+            void this.$store.dispatch("LOAD_WORLD_DATA", { 
+                project: this.$route.params.project, 
+                name: newName 
+            });
+        }
     }
 }
 </script>
