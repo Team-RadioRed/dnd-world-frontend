@@ -1,4 +1,4 @@
-export const API_URL = "http://192.168.0.237:3000";
-export const IMG_URL = "http://192.168.0.237:3030";
+export const API_URL = "https://dnd.radiored.ru";
+export const IMG_URL = "https://radiored.ru/images";
 
-export const VERSION = "0.6";
+export const VERSION = "0.6.1";
