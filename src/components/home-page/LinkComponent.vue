@@ -22,7 +22,7 @@ export default {
     <RouterLink :to="{ name: 'map', params: { project: index, map: 'main' } }" class="home-page-url-component">
         <img :src="getImageServer(data.image)" class="home-page-url-image">
         <div class="home-page-url-text-container">
-            <label class="home-page-url-title">>> {{ data.title }}</label>
+            <label class="home-page-url-title">>> {{ data.projectTitle }}</label>
             <label class="home-page-url-description">{{ data.description }}</label>
         </div>
     </RouterLink>

@@ -12,10 +12,9 @@ export default {
         UIPanel
     },
     computed: {
-        mapName() {
-            return this.$route.params.map;
-        },
         mapObjects() {
+            const mapName = this.$route.params.map;
+
             const mapObjects = this.$store.getters.MAP_OBJECT(this.$route.params.project);
             const mapConfig = this.$store.getters.WORLD_CONFIG;
 
@@ -26,7 +25,7 @@ export default {
             Object.values(mapObjects).forEach((data) => {
                 // Проверка, что точку надо отображать на этой карте
                 if (data.target == null) return;
-                if (!data.target.includes(this.mapName)) return;
+                if (!data.target.includes(mapName)) return;
 
                 // Проверка на фильтрацию
                 if (data.type == null) return;
@@ -41,12 +40,13 @@ export default {
     },
     async mounted() {
         const projectName = this.$route.params.project;
+        const mapName = this.$route.params.map;
 
         // Получение параметров всех миров
         await this.$store.dispatch("LOAD_WORLD");
         await this.$store.dispatch("LOAD_WORLD_DATA", { 
             project: projectName, 
-            name: this.mapName
+            name: mapName
         });
         // Получение данных мира
         await this.$store.dispatch("LOAD_CHARACTER", projectName);
