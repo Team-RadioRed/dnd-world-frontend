@@ -6,6 +6,7 @@ import DTSmallIcon from './DTSmallIcon.vue';
 import DTStats from './DTStats.vue';
 import DTSubPage from './DTSubPage.vue';
 import DTText from './DTText.vue';
+import DTWorldLink from './DTWorldLink.vue';
 
 export default {
     computed: {
@@ -36,6 +37,9 @@ export default {
                     return DTSkills;
                 case "sub-page":
                     return DTSubPage;
+                case "world-link":
+                    return DTWorldLink;
+
             }
         }
     }

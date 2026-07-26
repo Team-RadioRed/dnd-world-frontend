@@ -58,6 +58,7 @@ export default {
                 project: this.$route.params.project, 
                 name: newName 
             });
+            this.$store.dispatch("CLOSE_ALL");
         }
     }
 }
