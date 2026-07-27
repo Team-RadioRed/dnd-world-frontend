@@ -159,37 +159,40 @@ export default {
     </div>
 
     <div class="left-panel" v-if="worldParams != null">
-        <!-- ==================== -->
-        <!-- Filter -->
-        <UIButton :click-method="toggleVisibleFilter" v-if="checkFilter">
-            <SVGLiner svgPath="svg/point001.svg" class="left-button" />
-        </UIButton>
-        <!-- Layer -->
-        <UIButton :click-method="toggleVisibleLayer" v-if="checkLayer">
-            <SVGLiner svgPath="svg/layer001.svg" class="left-button" />
-        </UIButton>
-        <!-- Map -->
-        <UIButton :click-method="toggleVisibleMap" v-if="checkMap">
-            <SVGLiner svgPath="svg/world001.svg" class="left-button" />
-        </UIButton>
-        <div class="filter-splitter"></div>
-        <!-- ==================== -->
+        <div class="left-panel-dynamic">
+            <!-- ==================== -->
+            <!-- Filter -->
+            <UIButton :click-method="toggleVisibleFilter" v-if="checkFilter">
+                <SVGLiner svgPath="svg/point001.svg" class="left-button" />
+            </UIButton>
+            <!-- Layer -->
+            <UIButton :click-method="toggleVisibleLayer" v-if="checkLayer">
+                <SVGLiner svgPath="svg/layer001.svg" class="left-button" />
+            </UIButton>
+            <!-- Map -->
+            <UIButton :click-method="toggleVisibleMap" v-if="checkMap">
+                <SVGLiner svgPath="svg/world001.svg" class="left-button" />
+            </UIButton>
+            <div class="filter-splitter"></div>
+            <!-- ==================== -->
 
-        <!-- ==================== -->
-        <!-- Buttons -->
-        <UIButton v-for="(value, index) in worldParams.group" 
-            :key="index" 
-            :click-method="showPanel"
-            :button-name="index">
-            <SVGLiner :svgPath="value.icon" class="left-button" />
-        </UIButton>
-        <!-- ==================== -->
-
-        <!-- ==================== -->
-        <!-- Return button -->
-        <RouterLink :to="{ name: 'home' }" class="left-button return-menu-button">
-            ◄
-        </RouterLink>
-        <!-- ==================== -->
+            <!-- ==================== -->
+            <!-- Buttons -->
+            <UIButton v-for="(value, index) in worldParams.group" 
+                :key="index" 
+                :click-method="showPanel"
+                :button-name="index">
+                <SVGLiner :svgPath="value.icon" class="left-button" />
+            </UIButton>
+            <!-- ==================== -->
+        </div>
+        
+        <div class="left-panel-static">
+            <div class="filter-splitter"></div>
+            <!-- Return button -->
+            <RouterLink :to="{ name: 'home' }" class="left-button">
+                ◄
+            </RouterLink>
+        </div>
     </div>
 </template>
