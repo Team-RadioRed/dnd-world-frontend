@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_URL } from "@/storage/constants";
+const API_URL = import.meta.env.BACKEND_URL;
 
 export async function requestAxios(url, params) {
   const response = await axios({
