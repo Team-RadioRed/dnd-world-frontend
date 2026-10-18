@@ -1,4 +1,4 @@
-const IMG_URL = import.meta.env.IMAGE_URL;
+const IMG_URL = import.meta.env.VITE_IMAGE_URL;
 
 export function getImageServer(filePath, projectName = "worlds") {
   return `${IMG_URL}/${projectName}/${filePath}`;

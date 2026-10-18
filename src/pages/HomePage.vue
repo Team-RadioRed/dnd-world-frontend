@@ -1,6 +1,6 @@
 <script>
 import LinkComponent from '@/components/home-page/LinkComponent.vue';
-const VERSION = import.meta.env.VERSION;
+const VERSION = import.meta.env.VITE_VERSION;
 
 export default {
     components: {
